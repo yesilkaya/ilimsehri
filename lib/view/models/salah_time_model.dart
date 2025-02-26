@@ -1,6 +1,6 @@
 class SalahTimes {
   List<String>? cities;
-  String selectedCity;
+  String? selectedCity;
   String? fajr;
   String? sunrise;
   String? dhuhr;
@@ -13,7 +13,7 @@ class SalahTimes {
 
   SalahTimes({
     this.cities,
-    required this.selectedCity,
+    this.selectedCity,
     this.fajr,
     this.sunrise,
     this.dhuhr,

@@ -40,6 +40,7 @@ class SettingsScreenState extends ConsumerState<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final fontSize = ref.watch(fontSizeProvider);
     final state = ref.watch(cityProvider);
     double currentFontSize = ref.watch(fontSizeProvider) ?? 16.0;
     bool isVibrationActive = ref.watch(vibrationProvider) ?? false;
@@ -51,7 +52,10 @@ class SettingsScreenState extends ConsumerState<SettingsScreen> {
         titleTextStyle: const TextStyle(color: ColorStyles.appTextColor),
         title: Text(
           'Ayarlar',
-          style: Theme.of(context).textTheme.titleMedium?.copyWith(color: ColorStyles.appTextColor),
+          style: Theme.of(context)
+              .textTheme
+              .titleMedium
+              ?.copyWith(color: ColorStyles.appTextColor, fontSize: fontSize + 4),
         ),
         leading: const BackButton(color: ColorStyles.appTextColor),
       ),
@@ -61,14 +65,15 @@ class SettingsScreenState extends ConsumerState<SettingsScreen> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Padding(
-                      padding: EdgeInsets.only(left: 34.0, top: 20),
-                      child: Text('Font', style: TextStyle(fontSize: 16, color: ColorStyles.appTextColor)),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 34.0, top: 20),
+                      child:
+                          Text('Font Büyüklüğü', style: TextStyle(fontSize: fontSize, color: ColorStyles.appTextColor)),
                     ),
                     SliderTheme(
-                      data: const SliderThemeData(
+                      data: SliderThemeData(
                         valueIndicatorTextStyle: TextStyle(
-                            color: ColorStyles.appBackGroundColor, fontSize: 10), // Change the label color here
+                            color: ColorStyles.appBackGroundColor, fontSize: fontSize), // Change the label color here
                       ),
                       child: Slider(
                         value: currentFontSize.toDouble(),
@@ -98,15 +103,15 @@ class SettingsScreenState extends ConsumerState<SettingsScreen> {
                     ),
                     sections: [
                       SettingsSection(
-                        title: const Padding(
-                          padding: EdgeInsets.only(bottom: 8.0),
-                          child: Text('Zikirmatik Titreşimi', style: TextStyle(fontSize: 16)),
+                        title: Padding(
+                          padding: const EdgeInsets.only(bottom: 8.0),
+                          child: Text('Zikirmatik Titreşimi', style: TextStyle(fontSize: fontSize)),
                         ),
                         tiles: [
                           SettingsTile.switchTile(
                             title: Text(
                               isVibrationActive ? 'Açık' : 'Kapalı',
-                              style: const TextStyle(color: ColorStyles.appBackGroundColor, fontSize: 16),
+                              style: TextStyle(color: ColorStyles.appBackGroundColor, fontSize: fontSize),
                             ),
                             leading: const Icon(Icons.vibration),
                             initialValue: isVibrationActive,
@@ -118,65 +123,70 @@ class SettingsScreenState extends ConsumerState<SettingsScreen> {
                         ],
                       ),
                       SettingsSection(
-                        title: const Padding(
-                          padding: EdgeInsets.only(bottom: 8.0),
-                          child: Text('Şehir', style: TextStyle(fontSize: 16)),
+                        title: Padding(
+                          padding: const EdgeInsets.only(bottom: 8.0),
+                          child: Text('Şehir', style: TextStyle(fontSize: fontSize)),
                         ),
                         tiles: [
                           SettingsTile.navigation(
                             title: Text(
-                              state.selectedCity,
-                              style: const TextStyle(color: ColorStyles.appBackGroundColor, fontSize: 16),
+                              state.selectedCity ?? 'Şehir Seçin',
+                              style: TextStyle(color: ColorStyles.appBackGroundColor, fontSize: fontSize),
                             ),
                             leading: const Icon(Icons.location_on_outlined),
                             onPressed: (context) {
-                              _showCitySelectionSheet(context, state.cities); // Context ile fonksiyonu çağır
+                              _showCitySelectionSheet(context, state.cities);
                             },
                           ),
                         ],
                       ),
-                      if (Platform.isIOS)
+                      if (Platform.isIOS && state.selectedCity != null)
                         SettingsSection(
-                          title: const Padding(
-                            padding: EdgeInsets.only(bottom: 8.0),
-                            child: Text('Namaz Vakti Bildirimleri', style: TextStyle(fontSize: 16)),
+                          title: Padding(
+                            padding: const EdgeInsets.only(bottom: 8.0),
+                            child: Text('Namaz Vakti Bildirimleri', style: TextStyle(fontSize: fontSize)),
                           ),
                           tiles: [
-                            _buildSwitchTile(SalahTimeTypes.fajr, _fajrNotification, CupertinoIcons.sunrise_fill,
-                                (value) {
-                              setState(() {
-                                _fajrNotification = value;
-                              });
-                              _saveNotificationSettings(SalahTimesNotification.fajr, _fajrNotification);
-                            }),
+                            _buildSwitchTile(
+                              SalahTimeTypes.fajr,
+                              _fajrNotification,
+                              CupertinoIcons.sunrise_fill,
+                              (value) {
+                                setState(() {
+                                  _fajrNotification = value;
+                                });
+                                _saveNotificationSettings(SalahTimesNotification.fajr, _fajrNotification);
+                              },
+                              fontSize,
+                            ),
                             _buildSwitchTile(SalahTimeTypes.dhuhr, _dhuhrNotification, CupertinoIcons.sun_max_fill,
                                 (value) {
                               setState(() {
                                 _dhuhrNotification = value;
                               });
                               _saveNotificationSettings(SalahTimesNotification.dhuhr, _dhuhrNotification);
-                            }),
+                            }, fontSize),
                             _buildSwitchTile(SalahTimeTypes.asr, _asrNotification, CupertinoIcons.sun_haze_fill,
                                 (value) {
                               setState(() {
                                 _asrNotification = value;
                               });
                               _saveNotificationSettings(SalahTimesNotification.asr, _asrNotification);
-                            }),
+                            }, fontSize),
                             _buildSwitchTile(SalahTimeTypes.maghrib, _maghribNotification, CupertinoIcons.sunset_fill,
                                 (value) {
                               setState(() {
                                 _maghribNotification = value;
                               });
                               _saveNotificationSettings(SalahTimesNotification.maghrib, _maghribNotification);
-                            }),
+                            }, fontSize),
                             _buildSwitchTile(SalahTimeTypes.isha, _ishaNotification, CupertinoIcons.moon_stars_fill,
                                 (value) {
                               setState(() {
                                 _ishaNotification = value;
                               });
                               _saveNotificationSettings(SalahTimesNotification.isha, _ishaNotification);
-                            }),
+                            }, fontSize),
                           ],
                         ),
                     ],
@@ -190,7 +200,7 @@ class SettingsScreenState extends ConsumerState<SettingsScreen> {
 
   Future<void> _loadSelectedCity() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String cachedCity = prefs.getString('selectedCity') ?? defaultCity;
+    String? cachedCity = prefs.getString('selectedCity');
     ref.read(cityProvider.notifier).setSelectedCity = cachedCity;
   }
 
@@ -214,12 +224,16 @@ class SettingsScreenState extends ConsumerState<SettingsScreen> {
     await prefs.setBool(salahTimeNotificationName, value);
     final notifier = ref.read(cityProvider.notifier);
     final state = ref.read(cityProvider);
-    notifier.fetchSalahTimes7Days(state.selectedCity, salahTimeNotificationName);
+    notifier.fetchSalahTimes7Days(state.selectedCity ?? defaultCity, salahTimeNotificationName);
   }
 
-  AbstractSettingsTile _buildSwitchTile(String title, bool value, IconData icon, ValueChanged<bool> onChanged) {
+  AbstractSettingsTile _buildSwitchTile(
+      String title, bool value, IconData icon, ValueChanged<bool> onChanged, double fontSize) {
     return SettingsTile.switchTile(
-      title: Text(title),
+      title: Text(
+        title,
+        style: TextStyle(fontSize: fontSize),
+      ),
       leading: Icon(icon),
       initialValue: value,
       onToggle: onChanged,
@@ -228,6 +242,9 @@ class SettingsScreenState extends ConsumerState<SettingsScreen> {
   }
 
   void _showCitySelectionSheet(BuildContext context, List<String>? cities) {
+    final state = ref.read(cityProvider);
+    final fontSize = ref.watch(fontSizeProvider);
+
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -263,10 +280,11 @@ class SettingsScreenState extends ConsumerState<SettingsScreen> {
                       height: 40,
                       width: double.infinity,
                       color: Color.lerp(ColorStyles.appBackGroundColor, Colors.white, 0.2),
-                      child: const Center(
+                      child: Center(
                         child: Text(
                           'Şehir Seçin',
-                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: ColorStyles.appTextColor),
+                          style: TextStyle(
+                              fontSize: fontSize, fontWeight: FontWeight.bold, color: ColorStyles.appTextColor),
                         ),
                       ),
                     ),
@@ -279,19 +297,27 @@ class SettingsScreenState extends ConsumerState<SettingsScreen> {
                             physics: const NeverScrollableScrollPhysics(),
                             itemCount: cities?.length ?? 0,
                             itemBuilder: (BuildContext context, int index) {
-                              final city = cities![index];
+                              final city = state.cities![index];
                               return ListTile(
                                 title:
                                     Center(child: Text(city, style: const TextStyle(color: ColorStyles.appTextColor))),
                                 visualDensity: VisualDensity.compact,
                                 onTap: () async {
                                   final notifier = ref.read(cityProvider.notifier);
+                                  final state = ref.watch(cityProvider);
                                   notifier.setSelectedCity = city;
-                                  await notifier.fetchPrayerTimes(city);
-                                  await LocalNotificationService.cancelAllNotifications();
-
-                                  for (int i = 0; i < SalahTimesNotification.all.length; i++) {
-                                    notifier.fetchSalahTimes7Days(city, SalahTimesNotification.all[i]);
+                                  if (state.selectedCity != null) {
+                                    await notifier.fetchPrayerTimes(city);
+                                    if (_fajrNotification ||
+                                        _dhuhrNotification ||
+                                        _asrNotification ||
+                                        _maghribNotification ||
+                                        _ishaNotification) {
+                                      await LocalNotificationService.cancelAllNotifications();
+                                      for (int i = 0; i < SalahTimesNotification.all.length; i++) {
+                                        notifier.fetchSalahTimes7Days(city, SalahTimesNotification.all[i]);
+                                      }
+                                    }
                                   }
                                   _saveSelectedCity(city);
                                   if (context.mounted) Navigator.pop(context);

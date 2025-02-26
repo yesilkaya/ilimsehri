@@ -5,7 +5,7 @@ import '../../helper/notify_helper.dart';
 import '../../helper/platform_helper.dart';
 import '../../widgets/carousel_slider_widget.dart';
 import '../../widgets/categories.dart';
-import '../../widgets/slider_and_salah_time.dart';
+import '../../widgets/salah_time.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -30,13 +30,14 @@ class HomeScreenState extends State<HomeScreen> {
     return const Scaffold(
       backgroundColor: ColorStyles.appBackGroundColor,
       body: SafeArea(
-        child: CustomScrollView(
-          shrinkWrap: true,
-          slivers: [
-            SliverToBoxAdapter(child: CarouselSliderWidget()),
-            SliverToBoxAdapter(child: SalahTime()),
-            SliverToBoxAdapter(child: Categories()),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              CarouselSliderWidget(),
+              SalahTime(),
+              Categories(),
+            ],
+          ),
         ),
       ),
     );

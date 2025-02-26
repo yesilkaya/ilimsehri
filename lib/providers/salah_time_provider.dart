@@ -17,7 +17,7 @@ class SalahTimeNotifier extends StateNotifier<SalahTimes> {
   set _setIsPageReady(bool value) => state = state.copyWith(isPageReady: value);
   set setIsTimeOfEzan(bool value) => state = state.copyWith(isTimeOfEzan: value);
   set _setCities(List<String> value) => state = state.copyWith(cities: value);
-  set setSelectedCity(String value) => state = state.copyWith(selectedCity: value);
+  set setSelectedCity(String? value) => state = state.copyWith(selectedCity: value);
   set _setFajr(String value) => state = state.copyWith(fajr: value);
   set _setSunrise(String value) => state = state.copyWith(sunrise: value);
   set _setMaghrib(String value) => state = state.copyWith(maghrib: value);
@@ -32,14 +32,16 @@ class SalahTimeNotifier extends StateNotifier<SalahTimes> {
     if (!state.isPageReady) {
       _loadSelectedCity(ref);
       await fetchCities();
-      await fetchPrayerTimes(state.selectedCity);
+      if (state.selectedCity != null) {
+        await fetchPrayerTimes(state.selectedCity!);
+      }
       _setIsPageReady = true;
     }
   }
 
   Future<void> _loadSelectedCity(WidgetRef ref) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String cachedCity = prefs.getString('selectedCity') ?? 'İstanbul';
+    String? cachedCity = prefs.getString('selectedCity');
     setSelectedCity = cachedCity;
   }
 
@@ -58,8 +60,9 @@ class SalahTimeNotifier extends StateNotifier<SalahTimes> {
   }
 
   Future<void> fetchPrayerTimes(String city) async {
+    String url = 'https://api.aladhan.com/v1/timingsByCity?city=$city&country=Turkey&method=13';
     final response = await http.get(
-      Uri.parse('https://api.aladhan.com/v1/timingsByCity?city=$city&country=Turkey&method=0'),
+      Uri.parse(url),
     );
 
     if (response.statusCode == 200) {
@@ -73,9 +76,8 @@ class SalahTimeNotifier extends StateNotifier<SalahTimes> {
       _setAsr = timings['Asr'];
       _setDhuhr = timings['Dhuhr'];
       _setIsha = timings['Isha'];
-
       final prayerMeta = PrayerMeta.fromJson(meta);
-      _setSchool = prayerMeta.method.name == 'Shia Ithna-Ashari, Leva Institute, Qum' ? 'Leva Enstitüsü, Kum' : '';
+      _setSchool = prayerMeta.method.name;
     } else {
       throw Exception('Failed to load prayer times');
     }
@@ -91,7 +93,7 @@ class SalahTimeNotifier extends StateNotifier<SalahTimes> {
       String formattedDate =
           '${now.day.toString().padLeft(2, '0')}-${now.month.toString().padLeft(2, '0')}-${now.year}';
       final response = await http.get(
-        Uri.parse('https://api.aladhan.com/v1/timingsByCity/$formattedDate?city=$city&country=Turkey&method=0'),
+        Uri.parse('https://api.aladhan.com/v1/timingsByCity/$formattedDate?city=$city&country=Turkey&method=13'),
       );
 
       if (response.statusCode == 200) {

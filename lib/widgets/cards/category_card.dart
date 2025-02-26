@@ -21,16 +21,14 @@ class CategoryCard extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 6.0), // Dış boşluk ekleyerek çerçevenin düzgün çizilmesini sağla
       child: OutlinedButton(
         onPressed: press,
-
         style: OutlinedButton.styleFrom(
           side: const BorderSide(color: ColorStyles.appTextColor),
-          padding: const EdgeInsets.all(4),
+          padding: const EdgeInsets.all(10),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
           ),
         ),
-
-        clipBehavior: Clip.hardEdge, // Taşma durumlarında sınırları zorla
+        clipBehavior: Clip.none,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [

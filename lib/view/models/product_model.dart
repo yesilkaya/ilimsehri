@@ -21,12 +21,12 @@ class ProductModel {
 }
 
 List<ProductModel> CategoryList = [
-  ProductModel(image: kuranSvgPath, title: "Kur'an"),
+  ProductModel(image: kuranSvgPath, title: "Kur'an-ı Kerim"),
   ProductModel(image: sahifeiSeccadiyeImgPath, title: "Sahife-i Seccadiye"),
   ProductModel(image: dualarImgPath, title: "Dualar"),
   ProductModel(image: munacatlarImgPath, title: "Münacatlar"),
   ProductModel(image: zikirImgPath, title: "Zikir"),
   ProductModel(image: cocukImgPath, title: "Kitaplar"),
+  ProductModel(image: eyyamullahImgPath, title: "Dini Günler"),
   ProductModel(image: gaybImgPath, title: "Gayb'ın Dili"),
-  ProductModel(image: eyyamullahImgPath, title: "Eyyamullah"),
 ];

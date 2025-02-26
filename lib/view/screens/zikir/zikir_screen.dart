@@ -5,6 +5,8 @@ import 'package:vibration/vibration.dart';
 import '../../../constant/color_styles.dart';
 import '../../../constant/constants.dart';
 
+String imageName = 'zikir.jpg';
+
 class ZikirScreen extends StatefulWidget {
   @override
   _ZikirScreenState createState() => _ZikirScreenState();
@@ -30,8 +32,8 @@ class _ZikirScreenState extends State<ZikirScreen> {
             Container(
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
-              decoration: const BoxDecoration(
-                image: DecorationImage(image: AssetImage("assets/img/zikir.jpg"), fit: BoxFit.fill),
+              decoration: BoxDecoration(
+                image: DecorationImage(image: AssetImage("assets/img/$imageName"), fit: BoxFit.fill),
               ),
               child: Container(
                 alignment: Alignment.topCenter,
@@ -66,9 +68,9 @@ class _ZikirScreenState extends State<ZikirScreen> {
                 color: Colors.transparent,
                 alignment: Alignment.topLeft,
                 child: InkWell(
-                  child: CircleAvatar(
-                    backgroundColor: ColorStyles.appBackGroundColor.withOpacity(0.8),
-                    child: const Icon(Icons.arrow_back, size: 32, color: ColorStyles.appTextColor),
+                  child: const CircleAvatar(
+                    backgroundColor: ColorStyles.appBackGroundColor,
+                    child: Icon(Icons.arrow_back, size: 32, color: ColorStyles.appTextColor),
                   ),
                   onTap: () {
                     Navigator.of(context).pop();
@@ -84,9 +86,30 @@ class _ZikirScreenState extends State<ZikirScreen> {
                 width: 55,
                 alignment: Alignment.topRight,
                 child: InkWell(
-                  child: const Icon(Icons.autorenew, size: 32),
+                  child: Icon(Icons.autorenew,
+                      size: 32,
+                      color: imageName == 'zikir.jpg' ? ColorStyles.appBackGroundColor : ColorStyles.appTextColor),
                   onTap: () => _resetCounter(),
                 ),
+              ),
+            ),
+            Positioned(
+              top: MediaQuery.of(context).size.height / 8,
+              right: MediaQuery.of(context).size.width / 15,
+              child: Container(
+                height: 25,
+                width: 55,
+                alignment: Alignment.topRight,
+                child: InkWell(
+                    child: Icon(Icons.image_outlined,
+                        size: 32,
+                        color: imageName == 'zikir.jpg' ? ColorStyles.appBackGroundColor : ColorStyles.appTextColor),
+                    onTap: () {
+                      setState(() {
+                        print('Image Changed');
+                        imageName = imageName == 'zikir.jpg' ? 'meshed.jpeg' : 'zikir.jpg';
+                      });
+                    }),
               ),
             ),
           ],

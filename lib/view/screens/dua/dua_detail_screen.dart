@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../constant/color_styles.dart';
 import '../../../constant/constants.dart';
@@ -10,7 +11,7 @@ import '../../../helper/text_helper.dart';
 import '../../../widgets/play_sound_widget.dart';
 import '../../models/dua.dart';
 
-class DuaDetailScreen extends StatefulWidget {
+class DuaDetailScreen extends ConsumerStatefulWidget {
   final int duaID;
 
   const DuaDetailScreen({super.key, required this.duaID});
@@ -19,7 +20,8 @@ class DuaDetailScreen extends StatefulWidget {
   DuaDetailScreenState createState() => DuaDetailScreenState();
 }
 
-class DuaDetailScreenState extends State<DuaDetailScreen> {
+class DuaDetailScreenState extends ConsumerState<DuaDetailScreen> {
+  final ScrollController _scrollController = ScrollController();
   List<Dua> duaList = [];
   String? duaAdi = "";
   String? duaArapca = "";
@@ -29,10 +31,15 @@ class DuaDetailScreenState extends State<DuaDetailScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     databaseHelper = DatabaseHelper();
     _duaGetir();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 
   @override
@@ -43,6 +50,7 @@ class DuaDetailScreenState extends State<DuaDetailScreen> {
     return Scaffold(
       backgroundColor: ColorStyles.sepya,
       body: CustomScrollView(
+        controller: _scrollController,
         slivers: <Widget>[
           SliverAppBar(
             title: Text(
@@ -90,11 +98,21 @@ class DuaDetailScreenState extends State<DuaDetailScreen> {
   }
 
   void _duaGetir() {
-    duaAdi = duaAdi = Constants.dualar[widget.duaID];
+    duaAdi = Constants.dualar[widget.duaID];
     databaseHelper.duaListeGetir(widget.duaID + 1).then((value) {
       setState(() {
         duaList = value;
       });
+
+      /*Future.delayed(const Duration(milliseconds: 300), () {
+        double scrollOffset = 20 * _scrollController.position.maxScrollExtent / duaList.length;
+        _scrollController.animateTo(
+          scrollOffset,
+          duration: const Duration(milliseconds: 500),
+          curve: Curves.easeInOut,
+        );
+      });
+      */
     });
   }
 }

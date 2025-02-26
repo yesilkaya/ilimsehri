@@ -19,6 +19,11 @@ class ListHelper {
 
   ListHelper({required this.list, required this.listType, required this.title});
 
+  // GlobalKey'ler ve item yüksekliklerini saklayacak olan listeler
+  final Map<int, GlobalKey> itemKeys = {}; // Her öğe için GlobalKey
+  final List<double> itemHeights = []; // Öğelerin yüksekliklerini saklayacak liste
+  final ScrollController _scrollController = ScrollController();
+
   Widget getList() {
     String arapca = "";
     String turkce = "";
@@ -38,11 +43,15 @@ class ListHelper {
       return Container(
         color: ColorStyles.sepya,
         child: ListView.builder(
+          controller: _scrollController, // ScrollController'ı burada bağlıyoruz
           physics: const NeverScrollableScrollPhysics(),
           itemCount: list.length,
           shrinkWrap: true,
           itemBuilder: (context, index) {
             String? turkce = listType == ListType.sure ? list[index].meal as String : list[index].turkce as String;
+
+            // itemKeys içinde her öğe için key oluşturuyoruz
+            itemKeys[index] = GlobalKey();
 
             return InkWell(
               onTap: () {
@@ -53,44 +62,51 @@ class ListHelper {
 
                 _showShareDialog(context, fullText, '$title-${index + 1}');
               },
-              child: Column(
+              child: Stack(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(right: 20, left: 20, bottom: 25, top: 10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Text(
-                          listType == ListType.sure ? list[index].ayet_arapca ?? '' : list[index].arapca ?? '',
-                          textAlign: TextAlign.justify,
-                          style: Theme.of(context)
-                              .textTheme
-                              .headlineMedium!
-                              .copyWith(color: ColorStyles.kahveRengi, height: 1.6, fontSize: fontSize + 10),
+                  Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(right: 20, left: 30, bottom: 25, top: 10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Text(
+                              listType == ListType.sure
+                                  ? list[index].ayet_arapca.replaceAll('<br>', ' \n') ?? ''
+                                  : list[index].arapca.replaceAll('<br>', ' \n') ?? '',
+                              textAlign: TextAlign.justify,
+                              textDirection: TextDirection.rtl,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headlineMedium!
+                                  .copyWith(color: ColorStyles.kahveRengi, height: 1.6, fontSize: fontSize + 10),
+                            ),
+                            if (listType != ListType.sure) _getDivider(list[index].turkce),
+                            if (listType != ListType.sure)
+                              SelectableText(
+                                turkce.replaceAll('<br>', ' \n'),
+                                style: GoogleFonts.lora(
+                                  textStyle: TextStyle(fontSize: fontSize, color: Colors.black),
+                                ),
+                                textAlign: TextAlign.justify,
+                              ),
+                            if (!(listType == ListType.sahife || listType == ListType.munacat))
+                              _getDivider(list[index].meal),
+                            if (!(listType == ListType.sahife || listType == ListType.munacat))
+                              SelectableText(
+                                list[index].meal ?? '',
+                                style: GoogleFonts.lora(
+                                  textStyle: TextStyle(fontSize: fontSize, color: Colors.black),
+                                ),
+                                textAlign: TextAlign.justify,
+                              ),
+                          ],
                         ),
-                        if (listType != ListType.sure) _getDivider(list[index].turkce),
-                        if (listType != ListType.sure)
-                          SelectableText(
-                            turkce.replaceAll('<br>', ' \n'),
-                            style: GoogleFonts.lora(
-                              textStyle: TextStyle(fontSize: fontSize, color: Colors.black),
-                            ),
-                            textAlign: TextAlign.justify,
-                          ),
-                        if (!(listType == ListType.sahife || listType == ListType.munacat))
-                          _getDivider(list[index].meal),
-                        if (!(listType == ListType.sahife || listType == ListType.munacat))
-                          SelectableText(
-                            list[index].meal ?? '',
-                            style: GoogleFonts.lora(
-                              textStyle: TextStyle(fontSize: fontSize, color: Colors.black),
-                            ),
-                            textAlign: TextAlign.justify,
-                          ),
-                      ],
-                    ),
+                      ),
+                      if (list.length > 1) _getPageDivider(context, index),
+                    ],
                   ),
-                  if (list.length > 1) _getPageDivider(context, index),
                 ],
               ),
             );
@@ -98,6 +114,19 @@ class ListHelper {
         ),
       );
     });
+  }
+
+  // Belirli öğeye kaydırma işlemi
+  void scrollToIndex(int index) {
+    if (itemHeights.length > index) {
+      double scrollOffset = itemHeights.sublist(0, index).fold(0, (sum, height) => sum + height);
+
+      _scrollController.animateTo(
+        scrollOffset,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.easeInOut,
+      );
+    }
   }
 
   void _showShareDialog(BuildContext context, String text, String title) {

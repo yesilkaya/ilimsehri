@@ -37,7 +37,7 @@ class CarouselSliderWidgetState extends ConsumerState<CarouselSliderWidget> {
     super.initState();
 
     final notifier = ref.read(ayethadisProvider.notifier);
-    notifier.init(ref);
+    notifier.init();
     _pageController = PageController(initialPage: 0);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -88,7 +88,7 @@ class CarouselSliderWidgetState extends ConsumerState<CarouselSliderWidget> {
                     ),
                     FittedBox(
                       child: Padding(
-                        padding: EdgeInsets.all(defaultPadding),
+                        padding: const EdgeInsets.all(defaultPadding),
                         child: SizedBox(
                           height: 16,
                           child: Row(
@@ -96,7 +96,7 @@ class CarouselSliderWidgetState extends ConsumerState<CarouselSliderWidget> {
                               state.banners?.length ?? 0,
                               (index) {
                                 return Padding(
-                                  padding: EdgeInsets.only(left: defaultPadding / 4),
+                                  padding: const EdgeInsets.only(left: defaultPadding / 4),
                                   child: DotIndicator(
                                     isActive: index == _selectedIndex,
                                     activeColor: Colors.white,
@@ -112,23 +112,19 @@ class CarouselSliderWidgetState extends ConsumerState<CarouselSliderWidget> {
                     Positioned(
                       top: 10,
                       right: 10,
-                      child: Row(
-                        children: [
-                          GestureDetector(
-                            child: Text(
-                              stateCity.selectedCity,
+                      child: GestureDetector(
+                        child: Row(
+                          children: [
+                            Text(
+                              stateCity.selectedCity ?? '',
                               style: TextStyle(color: ColorStyles.textWhite, shadows: textShadow),
                             ),
-                            onTap: () => Navigator.push(
-                                context, MaterialPageRoute(builder: (context) => const SettingsScreen())),
-                          ),
-                          IconButton(
-                            icon: const Icon(Icons.settings),
-                            color: ColorStyles.textWhite,
-                            onPressed: () => Navigator.push(
-                                context, MaterialPageRoute(builder: (context) => const SettingsScreen())),
-                          ),
-                        ],
+                            const SizedBox(width: 10),
+                            const Icon(Icons.settings, color: ColorStyles.textWhite, size: 22),
+                          ],
+                        ),
+                        onTap: () =>
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => const SettingsScreen())),
                       ),
                     ),
                   ],

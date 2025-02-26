@@ -18,7 +18,7 @@ class GaybinDiliScreen extends StatefulWidget {
 }
 
 class GaybinDiliScreenState extends State<GaybinDiliScreen> {
-  bool isShowCard = false;
+  bool isShowCard = true;
   bool isShowButton = true;
   int backCardNumber = Random().nextInt(10);
   int frontCardNumber = Random().nextInt(gaybinDiliImages.length - 1) + 1;
