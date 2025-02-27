@@ -127,7 +127,7 @@ class _ZikirScreenState extends State<ZikirScreen> {
   }
 
   _incrementCounter() async {
-    if (isVibrationEnabled && (await Vibration.hasVibrator() ?? false)) {
+    if (isVibrationEnabled && (await Vibration.hasVibrator())) {
       Vibration.vibrate(duration: 24);
     }
     SharedPreferences prefs = await SharedPreferences.getInstance();

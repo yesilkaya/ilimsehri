@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../constant/constants.dart';
 import 'ramazan_detay.dart';
 
+//TODO remove this page after RamazanDetay is implemented
 class RamazanAmelleri extends StatefulWidget {
   @override
   _RamazanAmelleriState createState() => _RamazanAmelleriState();
