@@ -5,7 +5,6 @@ import '../constant/color_styles.dart';
 import '../constant/constants.dart';
 import '../constant/salah_times.dart';
 import '../providers/salah_time_provider.dart';
-import '../view/screens/settings_screen.dart';
 import 'salah_timer_widget.dart';
 
 class SalahTime extends ConsumerStatefulWidget {
@@ -33,90 +32,65 @@ class _SliderAndSalahTimeState extends ConsumerState<SalahTime> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    margin: const EdgeInsets.only(left: 6, right: 6, top: 15),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(color: ColorStyles.appTextColor, style: BorderStyle.solid),
-                      color: ColorStyles.appBackGroundColor,
-                    ),
-                    child: (state.selectedCity != null)
-                        ? Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                  children: [
-                                    Text(Constants.miladiTakvimGetir(), style: Theme.of(context).textTheme.bodyLarge),
-                                    Text(
-                                      Constants.hicriTakvimGetir(),
-                                      style: Theme.of(context).textTheme.bodyLarge,
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  ],
+                      margin: const EdgeInsets.only(left: 6, right: 6, top: 15),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(color: ColorStyles.appTextColor, style: BorderStyle.solid),
+                        color: ColorStyles.appBackGroundColor,
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Text(Constants.miladiTakvimGetir(), style: Theme.of(context).textTheme.bodyLarge),
+                                Text(
+                                  Constants.hicriTakvimGetir(),
+                                  style: Theme.of(context).textTheme.bodyLarge,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
                                 ),
-                              ),
-                              SalahTimeWidget([
-                                state.fajr!,
-                                state.sunrise!,
-                                state.dhuhr!,
-                                state.asr!,
-                                state.maghrib!,
-                                state.isha!,
-                              ]),
-                              state.cities != null && state.selectedCity!.isNotEmpty
-                                  ? Padding(
-                                      padding: const EdgeInsets.only(
-                                          right: defaultPadding,
-                                          left: defaultPadding,
-                                          top: defaultPadding / 2,
-                                          bottom: defaultPadding / 2),
-                                      child: Column(
-                                        children: [
-                                          Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                            children: [
-                                              _salahTimeWidget([state.school ?? '']),
-                                            ],
-                                          ),
-                                          const SizedBox(height: 10),
-                                          Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                            children: [
-                                              _salahTimeWidget([SalahTimeTypes.fajr, state.fajr ?? '']),
-                                              _getVerticalDivider(),
-                                              _salahTimeWidget([SalahTimeTypes.sunrise, state.sunrise ?? '']),
-                                              _getVerticalDivider(),
-                                              _salahTimeWidget([SalahTimeTypes.dhuhr, state.dhuhr ?? '']),
-                                              _getVerticalDivider(),
-                                              _salahTimeWidget([SalahTimeTypes.asr, state.asr ?? '']),
-                                              _getVerticalDivider(),
-                                              _salahTimeWidget([SalahTimeTypes.maghrib, state.maghrib ?? '']),
-                                              _getVerticalDivider(),
-                                              _salahTimeWidget([SalahTimeTypes.isha, state.isha ?? '']),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    )
-                                  : Container(),
-                            ],
-                          )
-                        : GestureDetector(
-                            onTap: () => Navigator.push(
-                                context, MaterialPageRoute(builder: (context) => const SettingsScreen())),
-                            child: const Center(
-                                child: Padding(
-                              padding: EdgeInsets.all(20.0),
-                              child: Text(
-                                'Namaz Vakitlerini Görmek İçin Lütfen Bir Şehir ve Kaynak  Seçiniz',
-                                textAlign: TextAlign.center,
-                              ),
-                            )),
+                              ],
+                            ),
                           ),
-                  ),
+                          SalahTimeWidget([
+                            state.fajr!,
+                            state.sunrise!,
+                            state.dhuhr!,
+                            state.asr!,
+                            state.maghrib!,
+                            state.isha!,
+                          ]),
+                          state.cities != null && state.selectedCity!.isNotEmpty
+                              ? Padding(
+                                  padding: const EdgeInsets.only(
+                                      right: defaultPadding,
+                                      left: defaultPadding,
+                                      top: defaultPadding / 2,
+                                      bottom: defaultPadding / 2),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      _salahTimeWidget([SalahTimeTypes.fajr, state.fajr ?? '']),
+                                      _getVerticalDivider(),
+                                      _salahTimeWidget([SalahTimeTypes.sunrise, state.sunrise ?? '']),
+                                      _getVerticalDivider(),
+                                      _salahTimeWidget([SalahTimeTypes.dhuhr, state.dhuhr ?? '']),
+                                      _getVerticalDivider(),
+                                      _salahTimeWidget([SalahTimeTypes.asr, state.asr ?? '']),
+                                      _getVerticalDivider(),
+                                      _salahTimeWidget([SalahTimeTypes.maghrib, state.maghrib ?? '']),
+                                      _getVerticalDivider(),
+                                      _salahTimeWidget([SalahTimeTypes.isha, state.isha ?? '']),
+                                    ],
+                                  ),
+                                )
+                              : Container(),
+                        ],
+                      )),
                   /*state.isTimeOfEzan
                       ? const AudioPlayerWidget(
                           soundPath: 'ezan_1.mp3',

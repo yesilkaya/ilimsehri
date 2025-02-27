@@ -49,7 +49,7 @@ class BannerMStyle1 extends StatelessWidget {
                       title,
                       style: TextStyle(
                           fontWeight: FontWeight.w600,
-                          fontSize: 13,
+                          fontSize: 14,
                           color: ColorStyles.textWhite,
                           fontFamily: 'Montserrat',
                           shadows: textShadow),
@@ -79,7 +79,7 @@ class BannerMStyle1 extends StatelessWidget {
                           text,
                           style: TextStyle(
                               fontWeight: FontWeight.w600,
-                              fontSize: 11,
+                              fontSize: 13,
                               color: ColorStyles.textWhite,
                               fontFamily: 'Montserrat',
                               shadows: textShadow),

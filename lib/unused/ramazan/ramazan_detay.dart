@@ -16,12 +16,6 @@ class RamazanDetay extends StatefulWidget {
 class _RamazanDetayState extends State<RamazanDetay> {
   List<Ramazan> ramazanList = [];
   DatabaseHelper databaseHelper = DatabaseHelper();
-  String? munacatAdi = "";
-  String? munacatArapca = "";
-  String? munacatTurkce = "";
-  String? dataArapca;
-  String? dataTurkce;
-  String? dataTurkce2;
   String duaAdi = "";
   @override
   void initState() {
@@ -43,7 +37,7 @@ class _RamazanDetayState extends State<RamazanDetay> {
               children: <Widget>[
                 Positioned.fill(
                   child: Image(
-                    image: AssetImage("assets/img/ehlibeyt/masum1_${10}.png"),
+                    image: AssetImage("assets/img/harem.jpg"),
                     fit: BoxFit.fitWidth,
                   ),
                 ),
@@ -183,7 +177,7 @@ class _RamazanDetayState extends State<RamazanDetay> {
                 SizedBox(
                   height: 15,
                 ),
-                HtmlWidget(ramazanList[i].turkce ?? ''),
+                //HtmlWidget(ramazanList[i].turkce ?? ''),
 
                 //Text(ramazanList[i]?.turkce ?? "" ,style: TextStyle(color: Colors.black)),
                 SizedBox(
@@ -215,7 +209,7 @@ class _RamazanDetayState extends State<RamazanDetay> {
                 SizedBox(
                   height: 15,
                 ),
-                HtmlWidget(ramazanList[i].arapca ?? ''),
+                //HtmlWidget(ramazanList[i].arapca ?? ''),
 
                 //Text(ramazanList[i]?.turkce ?? "" ,style: TextStyle(color: Colors.black)),
                 SizedBox(

@@ -57,6 +57,7 @@ dependencies:
   cached_network_image: ^3.4.1
   html_unescape: ^2.0.0
   vibration: ^2.0.1
+  html: ^0.15.5
 
 dev_dependencies:
   flutter_test:

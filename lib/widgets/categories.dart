@@ -19,6 +19,7 @@ class Categories extends StatelessWidget {
       cocukScreenRoute,
       eyyamullahScreenRoute,
       gaybScreenRoute,
+      ramazanScreenRoute,
     ];
 
     return Padding(

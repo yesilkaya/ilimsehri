@@ -7,6 +7,7 @@ const String munacatScreenRoute = "munacat_screen";
 const String zikirScreenRoute = "zikir_screen";
 const String cocukScreenRoute = "cocuk_screen";
 const String gaybScreenRoute = "gayb_screen";
+const String ramazanScreenRoute = "ramazan_screen";
 const String eyyamullahScreenRoute = "eyyamullah_screen";
 const String settingsScreenRoute = "settings_screen_route";
 const String bookDetailScreenRoute = "book_detail_screen_route";

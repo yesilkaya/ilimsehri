@@ -9,6 +9,7 @@ import '../../view/screens/gaybin_dili_screen.dart';
 import '../../view/screens/home_screen.dart';
 import '../../view/screens/kuran/sureler_list_screen.dart';
 import '../../view/screens/munacat/munacatlar_screen.dart';
+import '../../view/screens/ramazan/ramazan_screen.dart';
 import '../../view/screens/sahife/sahifei_seccadiye_screen.dart';
 import '../../view/screens/settings_screen.dart';
 import '../../view/screens/splash/splash_screen.dart';
@@ -18,7 +19,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
     case SplashScreenRoute:
       return MaterialPageRoute(
-        builder: (context) => SplashScreen(),
+        builder: (context) => const SplashScreen(),
       );
 
     case homeScreenRoute:
@@ -43,7 +44,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
 
     case munacatScreenRoute:
       return MaterialPageRoute(
-        builder: (context) => MunacatlarScreen(),
+        builder: (context) => const MunacatlarScreen(),
       );
 
     case zikirScreenRoute:
@@ -53,17 +54,21 @@ Route<dynamic> generateRoute(RouteSettings settings) {
 
     case cocukScreenRoute:
       return MaterialPageRoute(
-        builder: (context) => ChildBooksScreen(),
+        builder: (context) => const ChildBooksScreen(),
       );
 
     case gaybScreenRoute:
       return MaterialPageRoute(
         builder: (context) => const GaybinDiliScreen(),
       );
+    case ramazanScreenRoute:
+      return MaterialPageRoute(
+        builder: (context) => RamazanScreen(),
+      );
 
     case eyyamullahScreenRoute:
       return MaterialPageRoute(
-        builder: (context) => EyyamullahScreen(),
+        builder: (context) => const EyyamullahScreen(),
       );
 
     case settingsScreenRoute:
@@ -80,7 +85,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
 
     default:
       return MaterialPageRoute(
-        builder: (context) => SplashScreen(),
+        builder: (context) => const SplashScreen(),
       );
   }
 }

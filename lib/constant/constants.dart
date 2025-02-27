@@ -12,6 +12,7 @@ const zikirImgPath = "assets/img/svg/zikr.svg";
 const cocukImgPath = "assets/img/svg/cocuk.svg";
 const gaybImgPath = "assets/img/svg/gayb2.svg";
 const eyyamullahImgPath = "assets/img/svg/takvim.svg";
+const ramazan = "assets/img/svg/dua.svg";
 
 const whatsAppSvgPath = "assets/img/svg/social_media/whatsapp.svg";
 

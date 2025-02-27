@@ -70,11 +70,30 @@ class SalahTimeNotifier extends StateNotifier<SalahTimes> {
       final Map<String, dynamic> timings = data['timings'];
       final Map<String, dynamic> meta = data['meta'];
 
-      _setFajr = timings['Fajr'];
+      print('timings: ${timings['Fajr']}');
+
+      List<String> timePartsFajr = timings['Fajr'].split(':');
+      int hour = int.parse(timePartsFajr[0]);
+      int minute = int.parse(timePartsFajr[1]);
+      DateTime initialTimeFajr = DateTime(2025, 3, 1, hour, minute);
+      DateTime newTimeFajr = initialTimeFajr.add(const Duration(minutes: 25));
+      String newTimeString =
+          '${newTimeFajr.hour.toString().padLeft(2, '0')}:${newTimeFajr.minute.toString().padLeft(2, '0')}';
+
+      List<String> timePartsDhuhr = timings['Maghrib'].split(':');
+      int hourDhuhr = int.parse(timePartsDhuhr[0]);
+      int minuteDhuhr = int.parse(timePartsDhuhr[1]);
+      DateTime initialTimeDhuhr = DateTime(2025, 3, 1, hourDhuhr, minuteDhuhr);
+      DateTime newTimeDhuhr = initialTimeDhuhr.add(const Duration(minutes: 8));
+      String newTimeStringDhuhr =
+          '${newTimeDhuhr.hour.toString().padLeft(2, '0')}:${newTimeDhuhr.minute.toString().padLeft(2, '0')}';
+
+      _setFajr = newTimeString;
       _setSunrise = timings['Sunrise'];
-      _setMaghrib = timings['Maghrib'];
-      _setAsr = timings['Asr'];
       _setDhuhr = timings['Dhuhr'];
+      _setMaghrib = newTimeStringDhuhr;
+      _setAsr = timings['Asr'];
+      ;
       _setIsha = timings['Isha'];
       final prayerMeta = PrayerMeta.fromJson(meta);
       _setSchool = prayerMeta.method.name;

@@ -30,7 +30,7 @@ class SoundNames {
       case SoundNames.cevseniKebir:
         return 'https://caferilik.com/video/dualar/cevsen-kebir/cevseni-kebir-huseyin-garip.mp3';
       case SoundNames.hzMehdi:
-        return 'https://caferilik.com/video/dualar/ferec-azumel-bela/ferec-farahmand.mp3';
+        return 'https://imammehdiyarenleri.com/wp-content/uploads/2022/03/Allahumme-Kun-li-veliyyikel-Ferec-Duasi-_-Turkce-Altyazili-_-%D8%AF%D9%8F%D8%B9%D9%8E%D8%A7%D8%A1%D9%8F-%D8%A7%D9%84%D9%92%D9%81%D9%8E%D8%B1%D9%8E%D8%AC%D9%92-%D8%B9%D9%84%DB%8C-%D9%81%D8%A7%D9%86%DB%8C-256-kbps.mp3';
       case SoundNames.iftitah:
         return 'https://caferilik.com/video/dualar/iftitah/ebuzer-helvaci-iftitah.mp3';
       case SoundNames.kisaHadisi:

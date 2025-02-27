@@ -3,4 +3,5 @@ class ListType {
   static const String sahife = "sahife";
   static const String dua = "dua";
   static const String munacat = "munacat";
+  static const String ramazan = "ramazan";
 }

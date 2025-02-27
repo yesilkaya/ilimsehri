@@ -32,6 +32,13 @@ class MyApp extends StatelessWidget {
       themeMode: ThemeMode.light,
       onGenerateRoute: generateRoute,
       initialRoute: SplashScreenRoute,
+      builder: (context, child) {
+        // textScaleFactor'ı sabitliyoruz
+        return MediaQuery(
+          data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0), // Font boyutunu sabitliyoruz
+          child: child!,
+        );
+      },
     );
   }
 }

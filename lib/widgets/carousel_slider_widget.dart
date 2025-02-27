@@ -117,7 +117,7 @@ class CarouselSliderWidgetState extends ConsumerState<CarouselSliderWidget> {
                           children: [
                             Text(
                               stateCity.selectedCity ?? '',
-                              style: TextStyle(color: ColorStyles.textWhite, shadows: textShadow),
+                              style: TextStyle(color: ColorStyles.textWhite, shadows: textShadow, fontSize: 16),
                             ),
                             const SizedBox(width: 10),
                             const Icon(Icons.settings, color: ColorStyles.textWhite, size: 22),
