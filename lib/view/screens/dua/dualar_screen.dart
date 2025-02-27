@@ -7,10 +7,10 @@ import 'dua_detail_screen.dart';
 
 class DualarScreen extends StatefulWidget {
   @override
-  _DualarScreenState createState() => _DualarScreenState();
+  DualarScreenState createState() => DualarScreenState();
 }
 
-class _DualarScreenState extends State<DualarScreen> {
+class DualarScreenState extends State<DualarScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

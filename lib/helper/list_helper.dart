@@ -69,7 +69,6 @@ class ListHelper {
                       Padding(
                         padding: const EdgeInsets.only(right: 20, left: 30, bottom: 25, top: 10),
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             Text(
                               listType == ListType.sure
@@ -84,12 +83,14 @@ class ListHelper {
                             ),
                             if (listType != ListType.sure) _getDivider(list[index].turkce),
                             if (listType != ListType.sure)
-                              SelectableText(
-                                turkce.replaceAll('<br>', ' \n'),
-                                style: GoogleFonts.lora(
-                                  textStyle: TextStyle(fontSize: fontSize, color: Colors.black),
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: SelectableText(
+                                  turkce.replaceAll('<br>', ' \n'),
+                                  style: GoogleFonts.lora(
+                                    textStyle: TextStyle(fontSize: fontSize, color: Colors.black),
+                                  ),
                                 ),
-                                textAlign: TextAlign.justify,
                               ),
                             if (!(listType == ListType.sahife || listType == ListType.munacat))
                               _getDivider(list[index].meal),
