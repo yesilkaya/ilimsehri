@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 
 import '../../../constant/color_styles.dart';
 import '../../../providers/eyyamullah_provider.dart';
@@ -26,7 +27,7 @@ class EyyamullahScreenState extends ConsumerState<EyyamullahScreen> {
   ];
   final random = Random();
   final ScrollController _scrollController = ScrollController();
-  int month = 13 - DateTime.now().month;
+  int month = DateTime.now().month;
   TextStyle style = const TextStyle(
     color: Colors.white70,
     fontFamily: 'Montserrat',
@@ -52,10 +53,28 @@ class EyyamullahScreenState extends ConsumerState<EyyamullahScreen> {
   Widget build(BuildContext context) {
     final state = ref.watch(eyyamullahProvider);
     if (state.isPageReady) {
-      Future.delayed(const Duration(microseconds: 100), () {
-        _scrollController.jumpTo(_scrollController.position.maxScrollExtent / month); // Orta pozisyon
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        int targetIndex = state.events!.indexWhere((event) {
+          try {
+            DateTime date = DateFormat("dd/MM/yyyy").parse(event.gregorianDate);
+            return date.month == month;
+          } catch (e) {
+            print("Tarih formatı hatalı: ${event.gregorianDate}");
+            return false;
+          }
+        });
+
+        if (targetIndex != -1) {
+          double itemHeight = 120.0;
+          double targetOffset = targetIndex * itemHeight;
+
+          if (_scrollController.hasClients) {
+            _scrollController.jumpTo(targetOffset);
+          }
+        }
       });
     }
+
     return Scaffold(
       backgroundColor: ColorStyles.sepya,
       appBar: AppBar(
