@@ -32,10 +32,10 @@ class Categories extends StatelessWidget {
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 4, // 3 sütun
+              crossAxisCount: 3, // 3 sütun
               crossAxisSpacing: 12, // Yatay boşluk
-              mainAxisSpacing: 12, // Dikey boşluk
-              childAspectRatio: 1 / 1.4, // 2 genişlik : 1 yükseklik
+              mainAxisSpacing: 6, // Dikey boşluk
+              childAspectRatio: 1 / 0.9, // 2 genişlik : 1 yükseklik
             ),
             itemCount: CategoryList.length,
             itemBuilder: (context, index) {
