@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../constant/color_styles.dart';
 import '../../../constant/constants.dart';
@@ -22,6 +23,9 @@ class DuaDetailScreen extends ConsumerStatefulWidget {
 
 class DuaDetailScreenState extends ConsumerState<DuaDetailScreen> {
   final ScrollController _scrollController = ScrollController();
+  late SharedPreferences _prefs;
+  double _savedScrollOffset = 0.0;
+
   List<Dua> duaList = [];
   String? duaAdi = "";
   String? duaArapca = "";
@@ -76,6 +80,13 @@ class DuaDetailScreenState extends ConsumerState<DuaDetailScreen> {
                     });
                   },
                 ),
+              IconButton(
+                icon: Icon(
+                  _savedScrollOffset == 0 ? Icons.bookmark_add_outlined : Icons.bookmark,
+                  color: ColorStyles.appTextColor,
+                ),
+                onPressed: _changeBookMarkStatus,
+              ),
             ],
           ),
           if (isPlaySound == true && duaSoundPath != null)
@@ -97,22 +108,29 @@ class DuaDetailScreenState extends ConsumerState<DuaDetailScreen> {
     );
   }
 
-  void _duaGetir() {
+  Future<void> _duaGetir() async {
     duaAdi = Constants.dualar[widget.duaID];
-    databaseHelper.duaListeGetir(widget.duaID + 1).then((value) {
+    await databaseHelper.duaListeGetir(widget.duaID + 1).then((value) {
       setState(() {
         duaList = value;
       });
 
-      /*Future.delayed(const Duration(milliseconds: 300), () {
-        double scrollOffset = 20 * _scrollController.position.maxScrollExtent / duaList.length;
-        _scrollController.animateTo(
-          scrollOffset,
-          duration: const Duration(milliseconds: 500),
-          curve: Curves.easeInOut,
-        );
-      });
-      */
+      _loadScrollPosition();
     });
+  }
+
+  Future<void> _loadScrollPosition() async {
+    _prefs = await SharedPreferences.getInstance();
+    _savedScrollOffset = _prefs.getDouble('${ListType.dua}_${duaAdi}_scrollOffset') ?? 0;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _scrollController.jumpTo(_savedScrollOffset);
+    });
+  }
+
+  Future<void> _changeBookMarkStatus() async {
+    setState(() {
+      _savedScrollOffset = _savedScrollOffset == 0 ? _scrollController.offset : 0;
+    });
+    await _prefs.setDouble('${ListType.dua}_${duaAdi}_scrollOffset', _savedScrollOffset);
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../constant/color_styles.dart';
 import '../../../constant/list_type.dart';
@@ -16,6 +17,10 @@ class MunacatDetailScreen extends StatefulWidget {
 }
 
 class MunacatDetailScreenState extends State<MunacatDetailScreen> {
+  final ScrollController _scrollController = ScrollController();
+  late SharedPreferences _prefs;
+  double _savedScrollOffset = 0.0;
+
   List<Munacat> munacatList = [];
   String? munacatAdi = "";
 
@@ -35,6 +40,7 @@ class MunacatDetailScreenState extends State<MunacatDetailScreen> {
     return Scaffold(
       backgroundColor: ColorStyles.appBackGroundColor,
       body: CustomScrollView(
+        controller: _scrollController,
         slivers: <Widget>[
           SliverAppBar(
             title: Text(
@@ -45,6 +51,15 @@ class MunacatDetailScreenState extends State<MunacatDetailScreen> {
                   .copyWith(fontSize: 14, color: ColorStyles.appTextColor, fontWeight: FontWeight.bold),
               maxLines: 3,
             ),
+            actions: [
+              IconButton(
+                icon: Icon(
+                  _savedScrollOffset == 0 ? Icons.bookmark_add_outlined : Icons.bookmark,
+                  color: ColorStyles.appTextColor,
+                ),
+                onPressed: _changeBookMarkStatus,
+              ),
+            ],
             centerTitle: true,
             pinned: true,
             backgroundColor: ColorStyles.appBackGroundColor,
@@ -63,12 +78,28 @@ class MunacatDetailScreenState extends State<MunacatDetailScreen> {
     );
   }
 
-  void _munacatGetir() {
-    databaseHelper.munacatListeGetir(widget.munacatID).then((value) {
+  Future<void> _munacatGetir() async {
+    await databaseHelper.munacatListeGetir(widget.munacatID).then((value) {
       setState(() {
         munacatList = value;
         munacatAdi = value[0].munacat_adi;
       });
     });
+    _loadScrollPosition();
+  }
+
+  Future<void> _loadScrollPosition() async {
+    _prefs = await SharedPreferences.getInstance();
+    _savedScrollOffset = _prefs.getDouble('${ListType.munacat}_${munacatAdi}_scrollOffset') ?? 0;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _scrollController.jumpTo(_savedScrollOffset);
+    });
+  }
+
+  Future<void> _changeBookMarkStatus() async {
+    setState(() {
+      _savedScrollOffset = _savedScrollOffset == 0 ? _scrollController.offset : 0;
+    });
+    await _prefs.setDouble('${ListType.munacat}_${munacatAdi}_scrollOffset', _savedScrollOffset);
   }
 }

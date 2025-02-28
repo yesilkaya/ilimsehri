@@ -22,7 +22,6 @@ class ListHelper {
   // GlobalKey'ler ve item yüksekliklerini saklayacak olan listeler
   final Map<int, GlobalKey> itemKeys = {}; // Her öğe için GlobalKey
   final List<double> itemHeights = []; // Öğelerin yüksekliklerini saklayacak liste
-  final ScrollController _scrollController = ScrollController();
 
   Widget getList() {
     String arapca = "";
@@ -43,14 +42,12 @@ class ListHelper {
       return Container(
         color: ColorStyles.sepya,
         child: ListView.builder(
-          controller: _scrollController, // ScrollController'ı burada bağlıyoruz
           physics: const NeverScrollableScrollPhysics(),
           itemCount: list.length,
           shrinkWrap: true,
           itemBuilder: (context, index) {
             String? turkce = listType == ListType.sure ? list[index].meal as String : list[index].turkce as String;
 
-            // itemKeys içinde her öğe için key oluşturuyoruz
             itemKeys[index] = GlobalKey();
 
             return InkWell(
@@ -115,19 +112,6 @@ class ListHelper {
         ),
       );
     });
-  }
-
-  // Belirli öğeye kaydırma işlemi
-  void scrollToIndex(int index) {
-    if (itemHeights.length > index) {
-      double scrollOffset = itemHeights.sublist(0, index).fold(0, (sum, height) => sum + height);
-
-      _scrollController.animateTo(
-        scrollOffset,
-        duration: const Duration(milliseconds: 500),
-        curve: Curves.easeInOut,
-      );
-    }
   }
 
   void _showShareDialog(BuildContext context, String text, String title) {

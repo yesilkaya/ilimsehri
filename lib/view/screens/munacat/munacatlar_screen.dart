@@ -123,17 +123,11 @@ List<Widget> dualarListWidget(BuildContext context) {
                     child: ListTile(
                       title: Text(
                         TextHelper.capitalizeWords(Constants.munacatlar[index]),
-                        style: TextStyle(color: ColorStyles.appTextColor, fontSize: 14, fontFamily: 'Montserrat'),
+                        style: const TextStyle(color: ColorStyles.appTextColor, fontSize: 14, fontFamily: 'Montserrat'),
                       ),
                       leading: CircleAvatar(
-                          backgroundColor: Colors.white.withOpacity(0.1),
-                          child: Image.asset('assets/img/icons/${imageNames[index]}.png')
-
-                          /*Text(
-                          index.toString(),
-                          style: TextStyle(color: ColorStyles.color2, fontSize: 20),
-                        ),*/
-                          ),
+                          backgroundColor: Colors.transparent,
+                          child: Image.asset('assets/img/icons/${imageNames[index]}.png')),
                     ),
                   ),
                 );

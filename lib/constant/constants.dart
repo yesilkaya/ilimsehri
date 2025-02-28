@@ -12,7 +12,7 @@ const zikirImgPath = "assets/img/svg/zikr.svg";
 const cocukImgPath = "assets/img/svg/cocuk.svg";
 const gaybImgPath = "assets/img/svg/gayb2.svg";
 const eyyamullahImgPath = "assets/img/svg/takvim.svg";
-const ramazan = "assets/img/svg/dua.svg";
+const ramazanImagePath = "assets/img/svg/ramadan.svg";
 
 const whatsAppSvgPath = "assets/img/svg/social_media/whatsapp.svg";
 
@@ -70,14 +70,14 @@ const pasNotMatchErrorText = "passwords do not match";
 const grandisExtendedFont = "Grandis Extended";
 
 class Constants {
-  static Color appBackGroundColor = Color.fromRGBO(46, 45, 69, 1);
-  static Color cardColor = Color.fromRGBO(46, 45, 69, 0.5);
-  static Color color2 = Color.fromRGBO(160, 120, 37, 1);
-  static Color yaziRenk = Color.fromRGBO(46, 45, 69, 1);
-  static Color gridColor = Color.fromRGBO(81, 100, 107, 1);
-  static Color gridColor2 = Color.fromRGBO(214, 168, 117, 1);
-  static Color colorSecondary = Color.fromRGBO(238, 226, 126, 1);
-  static Color white = Color.fromRGBO(255, 255, 255, 1);
+  static Color appBackGroundColor = const Color.fromRGBO(46, 45, 69, 1);
+  static Color cardColor = const Color.fromRGBO(46, 45, 69, 0.5);
+  static Color color2 = const Color.fromRGBO(160, 120, 37, 1);
+  static Color yaziRenk = const Color.fromRGBO(46, 45, 69, 1);
+  static Color gridColor = const Color.fromRGBO(81, 100, 107, 1);
+  static Color gridColor2 = const Color.fromRGBO(214, 168, 117, 1);
+  static Color colorSecondary = const Color.fromRGBO(238, 226, 126, 1);
+  static Color white = const Color.fromRGBO(255, 255, 255, 1);
 
   static String getCurrentTime() {
     DateTime now = DateTime.now();
@@ -89,15 +89,13 @@ class Constants {
   static var dayOfWeek = DateTime.now().weekday.toInt();
 
   static String miladiTakvimGetir() {
-    //String tarih = '${dateTime.day}'+"\n"+'${aylar[dateTime.month-1]}'+"\n"+'${dateTime.year}';
-    String tarih = '${dateTime.day}' + " " + '${aylar[dateTime.month - 1]}' + " " + '${dateTime.year}';
+    String tarih = '${dateTime.day}' + " " + aylar[dateTime.month - 1] + " " + '${dateTime.year}';
     return tarih;
   }
 
   static String hicriTakvimGetir() {
     HijriCalendar _today = new HijriCalendar.fromDate(dateTime);
-//  String hicriTarih = '${_today.hDay}'+"\n"+'${hicriAylar[_today.hMonth-1]}'+"\n"+'${_today.hYear}';
-    String hicriTarih = '${_today.hDay}' + " " + '${hicriAylar[_today.hMonth - 1]}' + " " + '${_today.hYear}';
+    String hicriTarih = '${_today.hDay}' + " " + hicriAylar[_today.hMonth - 1] + " " + '${_today.hYear}';
     return hicriTarih;
   }
 

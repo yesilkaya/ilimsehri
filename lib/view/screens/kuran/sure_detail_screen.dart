@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../constant/color_styles.dart';
 import '../../../../helper/database_helper.dart';
@@ -19,6 +20,10 @@ class SureDetailScreen extends StatefulWidget {
 }
 
 class SureDetailScreenState extends State<SureDetailScreen> {
+  final ScrollController _scrollController = ScrollController();
+  late SharedPreferences _prefs;
+  double _savedScrollOffset = 0.0;
+
   List<Ayet> ayetList = [];
   DatabaseHelper? databaseHelper;
   String sureAdi = '';
@@ -49,6 +54,15 @@ class SureDetailScreenState extends State<SureDetailScreen> {
               .copyWith(fontSize: 16, color: ColorStyles.appTextColor, fontWeight: FontWeight.bold),
           maxLines: 3,
         ),
+        actions: [
+          IconButton(
+            icon: Icon(
+              _savedScrollOffset == 0 ? Icons.bookmark_add_outlined : Icons.bookmark,
+              color: ColorStyles.appTextColor,
+            ),
+            onPressed: _changeBookMarkStatus,
+          ),
+        ],
         centerTitle: true,
         backgroundColor: ColorStyles.appBackGroundColor,
         leading: const BackButton(
@@ -56,6 +70,7 @@ class SureDetailScreenState extends State<SureDetailScreen> {
         ),
       ),
       body: SingleChildScrollView(
+        controller: _scrollController,
         child: Column(
           children: [
             if (isPlaySound == true && sureAdi.isNotEmpty)
@@ -73,13 +88,29 @@ class SureDetailScreenState extends State<SureDetailScreen> {
     );
   }
 
-  void _getAyetFromDatabase(int sureId) {
+  Future<void> _getAyetFromDatabase(int sureId) async {
     if (widget.sure.sure_adi != null) sureAdi = "${widget.sure.sure_adi!} Suresi";
 
-    databaseHelper?.ayetlerListGetir(sureId).then((ayetleriIcerenListe) {
+    await databaseHelper?.ayetlerListGetir(sureId).then((ayetleriIcerenListe) {
       setState(() {
         ayetList = ayetleriIcerenListe;
       });
     });
+    _loadScrollPosition();
+  }
+
+  Future<void> _loadScrollPosition() async {
+    _prefs = await SharedPreferences.getInstance();
+    _savedScrollOffset = _prefs.getDouble('${ListType.sure}_${sureAdi}_scrollOffset') ?? 0;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _scrollController.jumpTo(_savedScrollOffset);
+    });
+  }
+
+  Future<void> _changeBookMarkStatus() async {
+    setState(() {
+      _savedScrollOffset = _savedScrollOffset == 0 ? _scrollController.offset : 0;
+    });
+    await _prefs.setDouble('${ListType.sure}_${sureAdi}_scrollOffset', _savedScrollOffset);
   }
 }

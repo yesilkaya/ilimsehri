@@ -29,5 +29,5 @@ List<ProductModel> CategoryList = [
   ProductModel(image: cocukImgPath, title: "Kitaplar"),
   ProductModel(image: eyyamullahImgPath, title: "Dini Günler"),
   ProductModel(image: gaybImgPath, title: "Gayb'ın Dili"),
-  ProductModel(image: ramazan, title: "Ramazan"),
+  ProductModel(image: ramazanImagePath, title: "Ramazan"),
 ];

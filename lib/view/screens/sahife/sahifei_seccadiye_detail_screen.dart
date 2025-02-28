@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../constant/color_styles.dart';
 import '../../../constant/list_type.dart';
@@ -15,6 +16,10 @@ class SahifeiSeccadiyeDetailScreen extends StatefulWidget {
 }
 
 class SahifeiSeccadiyeDetailScreenState extends State<SahifeiSeccadiyeDetailScreen> {
+  final ScrollController _scrollController = ScrollController();
+  late SharedPreferences _prefs;
+  double _savedScrollOffset = 0.0;
+
   List<SahifeiSeccadiye> duaList = [];
   DatabaseHelper databaseHelper = DatabaseHelper();
 
@@ -31,6 +36,7 @@ class SahifeiSeccadiyeDetailScreenState extends State<SahifeiSeccadiyeDetailScre
     return Scaffold(
       backgroundColor: ColorStyles.appBackGroundColor,
       body: CustomScrollView(
+        controller: _scrollController,
         slivers: <Widget>[
           SliverAppBar(
             title: Text(
@@ -41,6 +47,15 @@ class SahifeiSeccadiyeDetailScreenState extends State<SahifeiSeccadiyeDetailScre
                   .copyWith(fontSize: 14, color: ColorStyles.appTextColor, fontWeight: FontWeight.bold),
               maxLines: 3,
             ),
+            actions: [
+              IconButton(
+                icon: Icon(
+                  _savedScrollOffset == 0 ? Icons.bookmark_add_outlined : Icons.bookmark,
+                  color: ColorStyles.appTextColor,
+                ),
+                onPressed: _changeBookMarkStatus,
+              ),
+            ],
             centerTitle: true,
             pinned: true,
             backgroundColor: ColorStyles.appBackGroundColor,
@@ -59,11 +74,27 @@ class SahifeiSeccadiyeDetailScreenState extends State<SahifeiSeccadiyeDetailScre
     );
   }
 
-  void duaListesiniDoldur() {
-    databaseHelper.sahifeiSeccadiyeDuaListeGetir(widget.duaId).then((gelenListe) {
+  Future<void> duaListesiniDoldur() async {
+    await databaseHelper.sahifeiSeccadiyeDuaListeGetir(widget.duaId).then((gelenListe) {
       setState(() {
         duaList = gelenListe;
       });
     });
+    _loadScrollPosition();
+  }
+
+  Future<void> _loadScrollPosition() async {
+    _prefs = await SharedPreferences.getInstance();
+    _savedScrollOffset = _prefs.getDouble('${ListType.sahife}_${widget.duaAdi}_scrollOffset') ?? 0;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _scrollController.jumpTo(_savedScrollOffset);
+    });
+  }
+
+  Future<void> _changeBookMarkStatus() async {
+    setState(() {
+      _savedScrollOffset = _savedScrollOffset == 0 ? _scrollController.offset : 0;
+    });
+    await _prefs.setDouble('${ListType.sahife}_${widget.duaAdi}_scrollOffset', _savedScrollOffset);
   }
 }

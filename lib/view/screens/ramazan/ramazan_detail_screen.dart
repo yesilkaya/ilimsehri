@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../constant/color_styles.dart';
 import '../../../constant/constants.dart';
+import '../../../constant/list_type.dart';
 import '../../../helper/database_helper.dart';
 import '../../../helper/ramazan_list_helper.dart';
 import '../../../helper/text_helper.dart';
@@ -19,6 +21,9 @@ class RamazanDetailScreen extends ConsumerStatefulWidget {
 
 class RamazanDetailScreenState extends ConsumerState<RamazanDetailScreen> {
   final ScrollController _scrollController = ScrollController();
+  late SharedPreferences _prefs;
+  double _savedScrollOffset = 0.0;
+
   List<Ramazan> ramazanAmelList = [];
   String? duaAdi = "";
   String? duaArapca = "";
@@ -57,6 +62,15 @@ class RamazanDetailScreenState extends ConsumerState<RamazanDetailScreen> {
                   .copyWith(fontSize: 16, color: ColorStyles.appTextColor, fontWeight: FontWeight.bold),
               maxLines: 3,
             ),
+            actions: [
+              IconButton(
+                icon: Icon(
+                  _savedScrollOffset == 0 ? Icons.bookmark_add_outlined : Icons.bookmark,
+                  color: ColorStyles.appTextColor,
+                ),
+                onPressed: _changeBookMarkStatus,
+              ),
+            ],
             centerTitle: true,
             pinned: true,
             backgroundColor: ColorStyles.appBackGroundColor,
@@ -80,10 +94,23 @@ class RamazanDetailScreenState extends ConsumerState<RamazanDetailScreen> {
     databaseHelper.ramazanAmelListeGetir(widget.ramazanAmelID + 1).then((value) {
       setState(() {
         ramazanAmelList = value;
-        print('ramazanAmelList arapça: ${ramazanAmelList[0].arapca}');
-        print('ramazanAmelList türkçe: ${ramazanAmelList[0].turkce}');
-        print('ramazanAmelList meal: ${ramazanAmelList[0].meal}');
       });
     });
+    _loadScrollPosition();
+  }
+
+  Future<void> _loadScrollPosition() async {
+    _prefs = await SharedPreferences.getInstance();
+    _savedScrollOffset = _prefs.getDouble('${ListType.ramazan}_${duaAdi}_scrollOffset') ?? 0;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _scrollController.jumpTo(_savedScrollOffset);
+    });
+  }
+
+  Future<void> _changeBookMarkStatus() async {
+    setState(() {
+      _savedScrollOffset = _savedScrollOffset == 0 ? _scrollController.offset : 0;
+    });
+    await _prefs.setDouble('${ListType.ramazan}_${duaAdi}_scrollOffset', _savedScrollOffset);
   }
 }
