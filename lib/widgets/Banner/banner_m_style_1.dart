@@ -41,7 +41,7 @@ class BannerMStyle1 extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
+              SizedBox(
                 height: 30,
                 child: Stack(
                   children: [
@@ -69,21 +69,20 @@ class BannerMStyle1 extends StatelessWidget {
               const Spacer(flex: 1),
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.75,
-                child: Container(
+                child: SizedBox(
                   height: 100,
                   child: ListView(
                     children: [
                       Padding(
-                        padding: EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(8.0),
                         child: Text(
                           text,
                           style: TextStyle(
                               fontWeight: FontWeight.w600,
-                              fontSize: 13,
+                              fontSize: 12,
                               color: ColorStyles.textWhite,
                               fontFamily: 'Montserrat',
                               shadows: textShadow),
-                          // overflow ve maxLines kaldırıldı
                         ),
                       ),
                     ],

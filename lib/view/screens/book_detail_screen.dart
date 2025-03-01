@@ -120,7 +120,7 @@ class SelectedBookScreenState extends State<SelectedBookScreen> with SingleTicke
               label: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  const Text('Whatsapp', style: TextStyle(fontSize: 16)),
+                  const Text('Sipariş Hattı', style: TextStyle(fontSize: 16)),
                   const SizedBox(width: 10),
                   SvgPicture.asset(
                     whatsAppSvgPath,

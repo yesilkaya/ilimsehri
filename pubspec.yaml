@@ -58,6 +58,7 @@ dependencies:
   html_unescape: ^2.0.0
   vibration: ^2.0.1
   html: ^0.15.5
+  webview_flutter: ^4.10.0
 
 dev_dependencies:
   flutter_test:

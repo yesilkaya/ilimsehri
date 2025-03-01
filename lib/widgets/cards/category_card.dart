@@ -17,32 +17,29 @@ class CategoryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 6.0), // Dış boşluk ekleyerek çerçevenin düzgün çizilmesini sağla
-      child: OutlinedButton(
-        onPressed: press,
-        style: OutlinedButton.styleFrom(
-          side: const BorderSide(color: ColorStyles.appTextColor),
-          padding: const EdgeInsets.all(10),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-          ),
+    return OutlinedButton(
+      onPressed: press,
+      style: OutlinedButton.styleFrom(
+        side: const BorderSide(color: ColorStyles.appTextColor),
+        padding: const EdgeInsets.all(6),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
         ),
-        clipBehavior: Clip.none,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            buildImage(),
-            buildTitle(context),
-          ],
-        ),
+      ),
+      clipBehavior: Clip.none,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          buildImage(),
+          buildTitle(context),
+        ],
       ),
     );
   }
 
   Widget buildImage() {
     return Flexible(
-      flex: 3,
+      flex: 7,
       child: AspectRatio(
         aspectRatio: 1,
         child: LocalImageWithLoader(image, radius: defaultBorderRadious),
@@ -52,7 +49,7 @@ class CategoryCard extends StatelessWidget {
 
   Widget buildTitle(BuildContext context) {
     return Flexible(
-      flex: 2,
+      flex: 6,
       child: Text(
         title,
         maxLines: 2,

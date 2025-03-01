@@ -34,7 +34,7 @@ class Categories extends StatelessWidget {
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 3, // 3 sütun
               crossAxisSpacing: 12, // Yatay boşluk
-              mainAxisSpacing: 6, // Dikey boşluk
+              mainAxisSpacing: 12, // Dikey boşluk
               childAspectRatio: 1 / 0.9, // 2 genişlik : 1 yükseklik
             ),
             itemCount: CategoryList.length,
