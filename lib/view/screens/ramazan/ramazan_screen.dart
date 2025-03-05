@@ -18,43 +18,41 @@ class RamazanScreenState extends State<RamazanScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorStyles.appBackGroundColor,
-      body: Container(
-        child: CustomScrollView(
-          slivers: <Widget>[
-            SliverAppBar(
-              title: Text(
-                'Ramazan Ayı Amelleri',
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-              centerTitle: true,
-              pinned: true,
-              backgroundColor: ColorStyles.appBackGroundColor,
-              leading: const BackButton(color: ColorStyles.appTextColor),
+      body: CustomScrollView(
+        slivers: <Widget>[
+          SliverAppBar(
+            title: Text(
+              'Ramazan Ayı Amelleri',
+              style: Theme.of(context).textTheme.titleLarge,
             ),
-            SliverAppBar(
-              backgroundColor: ColorStyles.appBackGroundColor,
-              expandedHeight: 180,
-              flexibleSpace: Stack(
-                children: <Widget>[
-                  Container(
-                    decoration: const BoxDecoration(
-                      image: DecorationImage(
-                        alignment: Alignment.center,
-                        image: AssetImage("assets/img/bismillah3.jpg"),
-                      ),
+            centerTitle: true,
+            pinned: true,
+            backgroundColor: ColorStyles.appBackGroundColor,
+            leading: const BackButton(color: ColorStyles.appTextColor),
+          ),
+          SliverAppBar(
+            backgroundColor: ColorStyles.appBackGroundColor,
+            expandedHeight: 180,
+            flexibleSpace: Stack(
+              children: <Widget>[
+                Container(
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(
+                      alignment: Alignment.center,
+                      image: AssetImage("assets/img/bismillah3.jpg"),
                     ),
                   ),
-                ],
-              ),
-              leading: Container(),
+                ),
+              ],
             ),
-            SliverList(
-              delegate: SliverChildListDelegate(
-                ramazanListWidget(context),
-              ),
+            leading: Container(),
+          ),
+          SliverList(
+            delegate: SliverChildListDelegate(
+              ramazanListWidget(context),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -83,7 +81,7 @@ List<Widget> ramazanListWidget(BuildContext context) {
                 ),
                 child: ListTile(
                   title: const Text(
-                    'Ramazan İmsakiyesi',
+                    'Ramazan İmsakiyesi (İstanbul)',
                     style: TextStyle(color: ColorStyles.appTextColor, fontSize: 14, fontFamily: 'Montserrat'),
                   ),
                   leading: CircleAvatar(
@@ -92,6 +90,7 @@ List<Widget> ramazanListWidget(BuildContext context) {
               ),
             );
           }
+          List<String> imageNames = ['pray', 'islam', 'seclusion', 'night', 'quran', 'muslim', 'quran', 'muslim'];
           return Constants.ramazanAyiAmelleri.isEmpty
               ? const Center(child: CircularProgressIndicator())
               : InkWell(
@@ -111,12 +110,8 @@ List<Widget> ramazanListWidget(BuildContext context) {
                         style: const TextStyle(color: ColorStyles.appTextColor, fontSize: 14, fontFamily: 'Montserrat'),
                       ),
                       leading: CircleAvatar(
-                        backgroundColor: Colors.white.withOpacity(0.1),
-                        child: Text(
-                          index.toString(),
-                          style: const TextStyle(color: ColorStyles.appTextColor, fontSize: 20),
-                        ),
-                      ),
+                          backgroundColor: Colors.transparent,
+                          child: Image.asset('assets/img/icons/${imageNames[index]}.png')),
                     ),
                   ),
                 );

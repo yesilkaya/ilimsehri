@@ -7,4 +7,14 @@ class UrlLauncherHelper {
       await launchUrl(parsedUrl, mode: LaunchMode.externalApplication);
     }
   }
+
+  static Future openWebsite({required String host, String? path, bool? isExternal}) async {
+    final Uri uri = Uri(
+      scheme: "https",
+      host: host,
+      path: path,
+    );
+    print('uri: $uri');
+    await launchUrl(uri, mode: (isExternal == true) ? LaunchMode.externalApplication : LaunchMode.platformDefault);
+  }
 }

@@ -1,4 +1,5 @@
 class SalahTimeTypes {
+  static const String imsak = 'İmsak';
   static const String fajr = 'Sabah';
   static const String sunrise = 'Güneş';
   static const String dhuhr = 'Öğle';

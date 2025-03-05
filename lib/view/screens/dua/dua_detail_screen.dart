@@ -132,5 +132,22 @@ class DuaDetailScreenState extends ConsumerState<DuaDetailScreen> {
       _savedScrollOffset = _savedScrollOffset == 0 ? _scrollController.offset : 0;
     });
     await _prefs.setDouble('${ListType.dua}_${duaAdi}_scrollOffset', _savedScrollOffset);
+    if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        backgroundColor: ColorStyles.appBackGroundColor,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12), // Köşeleri yumuşat
+        ),
+        content: Center(
+          child: Text(
+            _savedScrollOffset != 0
+                ? "Yer iminiz kaydedildi. Dilediğiniz zaman kaldığınız yerden okumaya devam edebilirsiniz"
+                : "Yer imi kaldırıldı",
+            style: const TextStyle(color: ColorStyles.appTextColor),
+            textAlign: TextAlign.center,
+          ),
+        ),
+      ));
+    }
   }
 }

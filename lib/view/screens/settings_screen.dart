@@ -23,11 +23,11 @@ class SettingsScreen extends ConsumerStatefulWidget {
 
 class SettingsScreenState extends ConsumerState<SettingsScreen> {
   String defaultCity = 'İstanbul';
-  bool _fajrNotification = false;
-  bool _dhuhrNotification = false;
-  bool _asrNotification = false;
-  bool _maghribNotification = false;
-  bool _ishaNotification = false;
+  bool _fajrNotification = true;
+  bool _dhuhrNotification = true;
+  bool _asrNotification = true;
+  bool _maghribNotification = true;
+  bool _ishaNotification = true;
 
   @override
   void initState() {
@@ -119,6 +119,24 @@ class SettingsScreenState extends ConsumerState<SettingsScreen> {
                               ref.read(vibrationProvider.notifier).setVibration(value);
                             },
                             activeSwitchColor: ColorStyles.appBackGroundColor,
+                          ),
+                        ],
+                      ),
+                      SettingsSection(
+                        title: Padding(
+                          padding: const EdgeInsets.only(bottom: 8.0),
+                          child: Text('Ülke', style: TextStyle(fontSize: fontSize)),
+                        ),
+                        tiles: [
+                          SettingsTile.navigation(
+                            title: Text(
+                              state.selectedCity ?? 'ülke Seçin',
+                              style: TextStyle(color: ColorStyles.appBackGroundColor, fontSize: fontSize),
+                            ),
+                            leading: const Icon(Icons.location_on_outlined),
+                            onPressed: (context) {
+                              _showCitySelectionSheet(context, state.cities);
+                            },
                           ),
                         ],
                       ),

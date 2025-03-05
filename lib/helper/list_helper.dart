@@ -57,7 +57,7 @@ class ListHelper {
                 String meal = (!(listType == ListType.sahife || listType == ListType.munacat)) ? list[index].meal : '';
                 String fullText = '$turkceText\n\n$arapca\n\n$meal\n\n$title-${index + 1}';
 
-                _showShareDialog(context, fullText, '$title-${index + 1}');
+                _showShareDialog(context, fullText, '$title - ${index + 1}');
               },
               child: Stack(
                 children: [

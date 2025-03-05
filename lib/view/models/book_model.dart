@@ -679,4 +679,17 @@ gelistirecekler.""",
     pageNumber: "48 Sayfa",
     size: "13 * 19",
   ),
+  BookModel(
+    image: 'assets/img/kitaplar/imam_mehdinin_hayatindan_hikayeler.jpeg',
+    name: "İmam Mehdi'nin Hayatından Hikayelerı",
+    writer: "Mecid Muhammedi",
+    drawer: "Kevser Rızai",
+    price: 80,
+    priceAfetDiscount: 55,
+    discountPerCent: 30,
+    pageNumber: "48 Sayfa",
+    size: "17 * 24",
+    description:
+        """Gökyüzü tozla kaplıydı. Göz, gözü görmüyordu. Rüzgar esiyor ama o kırk kişi sarsılmıyordu. Ağaçlar eğildi ve doğruldu ama onlar yoluna devam ettiler. Nihayet o kırk yolcu, sanki kırk ışık gibi Samarra şehrine girdi. O tufanlı havada Samarra uykudaydı. Sokaklar uykudaydı, insanlar, ağaçlar ve kuşlar da uykudaydı. Hiç kimse o kırk kişinin hangi kapıdan geçtiğini anlamadı...""",
+  ),
 ];

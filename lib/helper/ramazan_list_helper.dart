@@ -38,16 +38,16 @@ class RamazanListHelper {
           itemCount: list.length,
           shrinkWrap: true,
           itemBuilder: (context, index) {
-            // itemKeys içinde her öğe için key oluşturuyoruz
             itemKeys[index] = GlobalKey();
             arapca = list[index].arapca ?? '';
             turkce = list[index].turkce ?? '';
             meal = list[index].meal ?? '';
             return InkWell(
               onTap: () {
-                String fullText = '$turkce\n\n$arapca\n\n$meal\n\n$title-${index + 1}';
-
-                _showShareDialog(context, fullText, '$title-${index + 1}');
+                String fullText =
+                    '${list[index].turkce ?? ''}\n\n${list[index].arapca ?? ''}\n\n${list[index].meal ?? ''}\n\n$title-${index + 1}';
+                print('fullText: $fullText');
+                _showShareDialog(context, fullText, '$title - ${index + 1}');
               },
               child: listIndex == 2
                   ? Padding(

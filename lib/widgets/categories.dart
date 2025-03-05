@@ -37,11 +37,11 @@ class Categories extends StatelessWidget {
               mainAxisSpacing: 12, // Dikey boşluk
               childAspectRatio: 1 / 0.9, // 2 genişlik : 1 yükseklik
             ),
-            itemCount: CategoryList.length,
+            itemCount: categoryList.length,
             itemBuilder: (context, index) {
               return CategoryCard(
-                image: CategoryList[index].image,
-                title: CategoryList[index].title,
+                image: categoryList[index].image,
+                title: categoryList[index].title,
                 press: () {
                   Navigator.pushNamed(context, pageRoute[index]);
                 },

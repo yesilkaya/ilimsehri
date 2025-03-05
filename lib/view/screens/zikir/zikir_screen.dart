@@ -5,7 +5,7 @@ import 'package:vibration/vibration.dart';
 import '../../../constant/color_styles.dart';
 import '../../../constant/constants.dart';
 
-String imageName = 'zikir.jpg';
+String imageName = 'meshed.jpeg';
 
 class ZikirScreen extends StatefulWidget {
   const ZikirScreen({super.key});

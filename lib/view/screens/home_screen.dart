@@ -6,6 +6,7 @@ import '../../helper/platform_helper.dart';
 import '../../widgets/carousel_slider_widget.dart';
 import '../../widgets/categories.dart';
 import '../../widgets/salah_time.dart';
+import 'drawer_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -22,12 +23,14 @@ class HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> getAllNotifications() async {
+    await LocalNotificationService.cancelAllNotifications();
     await LocalNotificationService.getScheduledNotifications();
   }
 
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
+      drawer: DrawerScreen(), // Drawer
       backgroundColor: ColorStyles.appBackGroundColor,
       body: SafeArea(
         child: SingleChildScrollView(

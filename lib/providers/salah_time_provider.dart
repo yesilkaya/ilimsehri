@@ -70,30 +70,14 @@ class SalahTimeNotifier extends StateNotifier<SalahTimes> {
       final Map<String, dynamic> timings = data['timings'];
       final Map<String, dynamic> meta = data['meta'];
 
-      print('timings: ${timings['Fajr']}');
+      String zeynebiyeFajrTime = _getZeynebiyeFajrSalahTime(timings);
+      String zeynebiyeMaghribTime = _getZeynebiyeMaghribSalahTime(timings);
 
-      List<String> timePartsFajr = timings['Fajr'].split(':');
-      int hour = int.parse(timePartsFajr[0]);
-      int minute = int.parse(timePartsFajr[1]);
-      DateTime initialTimeFajr = DateTime(2025, 3, 1, hour, minute);
-      DateTime newTimeFajr = initialTimeFajr.add(const Duration(minutes: 25));
-      String newTimeString =
-          '${newTimeFajr.hour.toString().padLeft(2, '0')}:${newTimeFajr.minute.toString().padLeft(2, '0')}';
-
-      List<String> timePartsDhuhr = timings['Maghrib'].split(':');
-      int hourDhuhr = int.parse(timePartsDhuhr[0]);
-      int minuteDhuhr = int.parse(timePartsDhuhr[1]);
-      DateTime initialTimeDhuhr = DateTime(2025, 3, 1, hourDhuhr, minuteDhuhr);
-      DateTime newTimeDhuhr = initialTimeDhuhr.add(const Duration(minutes: 8));
-      String newTimeStringDhuhr =
-          '${newTimeDhuhr.hour.toString().padLeft(2, '0')}:${newTimeDhuhr.minute.toString().padLeft(2, '0')}';
-
-      _setFajr = newTimeString;
+      _setFajr = zeynebiyeFajrTime;
       _setSunrise = timings['Sunrise'];
       _setDhuhr = timings['Dhuhr'];
-      _setMaghrib = newTimeStringDhuhr;
+      _setMaghrib = zeynebiyeMaghribTime;
       _setAsr = timings['Asr'];
-      ;
       _setIsha = timings['Isha'];
       final prayerMeta = PrayerMeta.fromJson(meta);
       _setSchool = prayerMeta.method.name;
@@ -118,10 +102,13 @@ class SalahTimeNotifier extends StateNotifier<SalahTimes> {
       if (response.statusCode == 200) {
         final Map<String, dynamic> timings = json.decode(response.body)['data']['timings'];
 
+        String zeynebiyeFajrTime = _getZeynebiyeFajrSalahTime(timings);
+        String zeynebiyeMaghribTime = _getZeynebiyeMaghribSalahTime(timings);
+
         SalahTimes10Days salahTimes = SalahTimes10Days(
-          fajr: timings['Fajr'],
+          fajr: zeynebiyeFajrTime,
           sunrise: timings['Sunrise'],
-          dhuhr: timings['Dhuhr'],
+          dhuhr: zeynebiyeMaghribTime,
           asr: timings['Asr'],
           maghrib: timings['Maghrib'],
           isha: timings['Isha'],
@@ -130,12 +117,7 @@ class SalahTimeNotifier extends StateNotifier<SalahTimes> {
         if (notificationName == SalahTimesNotification.fajr) {
           int fajrHour = int.parse(salahTimes.fajr.substring(0, 2));
           int fajrMinute = int.parse(salahTimes.fajr.substring(3, 5));
-/*
-          DateTime startTime = DateTime(2024, 11, 3, fajrHour, fajrMinute);
-          Duration durationToSubtract = const Duration(hours: 1, minutes: 15);
-          DateTime resultTime = startTime.subtract(durationToSubtract);
-          LocalNotificationService.scheduleNotification(dayOfWeek + i, resultTime.hour, resultTime.minute);
- */
+
           if (notificationValue == true) {
             setNotifications(now, fajrHour, fajrMinute, 0);
           }
@@ -174,6 +156,29 @@ class SalahTimeNotifier extends StateNotifier<SalahTimes> {
       await cancelNotification(now, notificationName);
     }
     await LocalNotificationService.getScheduledNotifications();
+  }
+
+  String _getZeynebiyeFajrSalahTime(Map<String, dynamic> timings) {
+    List<String> timePartsFajr = timings['Fajr'].split(':');
+    int hour = int.parse(timePartsFajr[0]);
+    int minute = int.parse(timePartsFajr[1]);
+    DateTime initialTimeFajr = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, hour, minute);
+    DateTime newTimeFajr = initialTimeFajr.add(const Duration(minutes: 25));
+    String newTimeString =
+        '${newTimeFajr.hour.toString().padLeft(2, '0')}:${newTimeFajr.minute.toString().padLeft(2, '0')}';
+    return newTimeString;
+  }
+
+  String _getZeynebiyeMaghribSalahTime(Map<String, dynamic> timings) {
+    List<String> timePartsDhuhr = timings['Maghrib'].split(':');
+    int hourDhuhr = int.parse(timePartsDhuhr[0]);
+    int minuteDhuhr = int.parse(timePartsDhuhr[1]);
+    DateTime initialTimeDhuhr =
+        DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, hourDhuhr, minuteDhuhr);
+    DateTime newTimeDhuhr = initialTimeDhuhr.add(const Duration(minutes: 8));
+    String newTimeStringDhuhr =
+        '${newTimeDhuhr.hour.toString().padLeft(2, '0')}:${newTimeDhuhr.minute.toString().padLeft(2, '0')}';
+    return newTimeStringDhuhr;
   }
 
   void setNotifications(DateTime now, int hour, int minute, int salahIndex) async {

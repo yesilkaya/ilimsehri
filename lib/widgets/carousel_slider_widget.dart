@@ -110,6 +110,14 @@ class CarouselSliderWidgetState extends ConsumerState<CarouselSliderWidget> {
                       ),
                     ),
                     Positioned(
+                      top: 0,
+                      left: 10,
+                      child: IconButton(
+                        icon: const Icon(Icons.menu, color: ColorStyles.textWhite), // Drawer ikonu
+                        onPressed: () => Scaffold.of(context).openDrawer(),
+                      ),
+                    ),
+                    Positioned(
                       top: 10,
                       right: 10,
                       child: GestureDetector(

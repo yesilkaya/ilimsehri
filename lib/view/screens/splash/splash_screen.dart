@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import '../home_screen.dart';
@@ -10,19 +12,65 @@ class SplashScreen extends StatefulWidget {
 }
 
 class SplashScreenState extends State<SplashScreen> {
+  Timer? _timer; // To manage the countdown
+  bool _isPressed = false; // To track if the image is pressed
+  int _delayDuration = 2; // Initial delay duration for the splash screen
+  late Duration _remainingTime; // To track the remaining time
+  bool _isTimerRunning = false; // To check if the timer is running
+
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration(seconds: checkDate() ? 4 : 2)).then((value) {
-      if (mounted) {
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const HomeScreen()));
+    _remainingTime = Duration(seconds: _delayDuration);
+    startTimer();
+  }
+
+  void startTimer() {
+    if (_isTimerRunning) return;
+
+    _isTimerRunning = true;
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (_remainingTime.inSeconds > 0 && !_isPressed) {
+        setState(() {
+          _remainingTime = Duration(seconds: _remainingTime.inSeconds - 1);
+        });
+      }
+
+      if (_remainingTime.inSeconds == 0) {
+        _timer?.cancel();
+        navigateToHomeScreen();
       }
     });
   }
 
+  void stopTimer() {
+    _timer?.cancel();
+    _isTimerRunning = false;
+  }
+
+  void resumeTimer() {
+    startTimer();
+  }
+
+  void navigateToHomeScreen() {
+    if (mounted) {
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const HomeScreen()));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return checkDate() ? const RamazanSplash() : const DefaultSplash();
+    return GestureDetector(
+      onPanStart: (_) {
+        // When the user presses on the image, stop the timer
+        stopTimer();
+      },
+      onPanEnd: (_) {
+        // When the user releases the image, resume the timer
+        resumeTimer();
+      },
+      child: checkDate() ? const RamazanSplash() : const DefaultSplash(),
+    );
   }
 
   bool checkDate() {
@@ -96,7 +144,9 @@ class RamazanSplash extends StatelessWidget {
       body: SizedBox.expand(
         child: Image.asset(
           'assets/img/ramazan_splash.jpeg',
-          fit: BoxFit.cover, // Resmi ekranı kaplayacak şekilde ölçeklendirir
+          fit: BoxFit.fill,
+          width: double.infinity,
+          height: double.infinity,
         ),
       ),
     );

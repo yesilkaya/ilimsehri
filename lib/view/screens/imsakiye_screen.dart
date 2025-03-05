@@ -11,13 +11,35 @@ class FullScreenImagePage extends StatelessWidget {
       backgroundColor: ColorStyles.appBackGroundColor,
       appBar: AppBar(
         title: Text(
-          '2025 Ramazan İmsakiyesi',
-          style: Theme.of(context).textTheme.titleLarge,
+          'Ramazan İmsakiyesi 2025 (İstanbul)',
+          style: Theme.of(context).textTheme.titleSmall,
         ),
         centerTitle: true,
         leading: const BackButton(color: ColorStyles.appTextColor),
         backgroundColor: ColorStyles.appBackGroundColor,
         elevation: 0,
+        actions: [
+          IconButton(
+            color: ColorStyles.appTextColor,
+            onPressed: () {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                duration: const Duration(seconds: 8),
+                backgroundColor: ColorStyles.appBackGroundColor,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                content: const Center(
+                  child: Text(
+                    "Ramazan ayı başlangıcı ve muhtemel kadir geceleri taklit ettiğiniz müçtehidin fetvasına göre farklılık gösterebilir. Lütfen taklit ettiğiniz  müçetihin fetvasını dikkate alınız.",
+                    style: TextStyle(color: ColorStyles.appTextColor),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ));
+            },
+            icon: const Icon(Icons.info_outline),
+          )
+        ],
       ),
       body: Stack(
         children: [

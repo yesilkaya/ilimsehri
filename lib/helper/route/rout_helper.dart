@@ -49,7 +49,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
 
     case zikirScreenRoute:
       return MaterialPageRoute(
-        builder: (context) => ZikirScreen(),
+        builder: (context) => const ZikirScreen(),
       );
 
     case cocukScreenRoute:
@@ -63,7 +63,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       );
     case ramazanScreenRoute:
       return MaterialPageRoute(
-        builder: (context) => RamazanScreen(),
+        builder: (context) => const RamazanScreen(),
       );
 
     case eyyamullahScreenRoute:

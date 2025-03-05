@@ -41,31 +41,6 @@ class BannerMStyle1 extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
-                height: 30,
-                child: Stack(
-                  children: [
-                    Text(
-                      title,
-                      style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 14,
-                          color: ColorStyles.textWhite,
-                          fontFamily: 'Montserrat',
-                          shadows: textShadow),
-                    ),
-                    Positioned(
-                      top: 22, // Alt çizgi ile metin arasındaki boşluk
-                      left: 0,
-                      right: 0,
-                      child: Container(
-                        height: 1, // Alt çizginin kalınlığı
-                        color: ColorStyles.textWhite, // Alt çizginin rengi
-                      ),
-                    ),
-                  ],
-                ),
-              ),
               const Spacer(flex: 1),
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.75,
@@ -91,20 +66,34 @@ class BannerMStyle1 extends StatelessWidget {
               ),
               const Spacer(flex: 1),
               if (footnote != null)
-                Text(
-                  footnote!,
-                  style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 13,
-                      color: ColorStyles.textWhite,
-                      fontFamily: 'Montserrat',
-                      shadows: textShadow),
-                  /*
-                  style: TextStyle(
-                      color: ColorStyles.appTextColor,
-                      fontWeight: FontWeight.w600,
-                      fontStyle: FontStyle.italic,
-                      shadows: textShadow),*/
+                Row(
+                  children: [
+                    Text(
+                      title,
+                      style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 11,
+                          color: ColorStyles.textWhite,
+                          fontFamily: 'Montserrat',
+                          shadows: textShadow),
+                    ),
+                    const Text(' - '),
+                    Text(
+                      footnote!,
+                      style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 11,
+                          color: ColorStyles.textWhite,
+                          fontFamily: 'Montserrat',
+                          shadows: textShadow),
+                      /*
+                      style: TextStyle(
+                          color: ColorStyles.appTextColor,
+                          fontWeight: FontWeight.w600,
+                          fontStyle: FontStyle.italic,
+                          shadows: textShadow),*/
+                    ),
+                  ],
                 ),
             ],
           ),

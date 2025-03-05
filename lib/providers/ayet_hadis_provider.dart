@@ -22,7 +22,6 @@ class AyetHadisNotifier extends StateNotifier<AyetHadis> {
       await fetchAyetHadis();
     }
     _setIsPageReady = true;
-    print('Ayet ve Hadisler yüklendi mi : ${state.isPageReady}');
   }
 
   int getBannersLength() {

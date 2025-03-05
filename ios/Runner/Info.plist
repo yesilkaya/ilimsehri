@@ -34,7 +34,14 @@
     </array>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
+		<string>https</string>
+    	<string>http</string>
+    	<string>twitter</string>
+    	<string>fb</string>
 		<string>whatsapp</string>
+		<string>instagram</string>
+		<string>facebook</string>
+		<string>youtube</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
