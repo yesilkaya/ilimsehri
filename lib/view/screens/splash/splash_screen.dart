@@ -13,8 +13,8 @@ class SplashScreen extends StatefulWidget {
 
 class SplashScreenState extends State<SplashScreen> {
   Timer? _timer; // To manage the countdown
-  bool _isPressed = false; // To track if the image is pressed
-  int _delayDuration = 2; // Initial delay duration for the splash screen
+  final bool _isPressed = false; // To track if the image is pressed
+  final int _delayDuration = 2; // Initial delay duration for the splash screen
   late Duration _remainingTime; // To track the remaining time
   bool _isTimerRunning = false; // To check if the timer is running
 

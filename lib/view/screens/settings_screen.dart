@@ -9,6 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../constant/color_styles.dart';
 import '../../constant/salah_times.dart';
+import '../../helper/countries.dart';
 import '../../helper/notify_helper.dart';
 import '../../providers/font_size_provider.dart';
 import '../../providers/salah_time_provider.dart';
@@ -22,6 +23,7 @@ class SettingsScreen extends ConsumerStatefulWidget {
 }
 
 class SettingsScreenState extends ConsumerState<SettingsScreen> {
+  String defaultCountry = 'Turkey';
   String defaultCity = 'İstanbul';
   bool _fajrNotification = true;
   bool _dhuhrNotification = true;
@@ -34,8 +36,7 @@ class SettingsScreenState extends ConsumerState<SettingsScreen> {
     super.initState();
     _loadSelectedCity();
     if (Platform.isIOS) _loadNotificationSettings(); // Bildirim ayarlarını yükle
-    final notifier = ref.read(cityProvider.notifier);
-    notifier.init(ref);
+    ref.read(cityProvider.notifier).init(ref);
   }
 
   @override
@@ -130,12 +131,12 @@ class SettingsScreenState extends ConsumerState<SettingsScreen> {
                         tiles: [
                           SettingsTile.navigation(
                             title: Text(
-                              state.selectedCity ?? 'ülke Seçin',
+                              state.selectedCountry ?? 'ülke Seçin',
                               style: TextStyle(color: ColorStyles.appBackGroundColor, fontSize: fontSize),
                             ),
                             leading: const Icon(Icons.location_on_outlined),
                             onPressed: (context) {
-                              _showCitySelectionSheet(context, state.cities);
+                              _showCountrySelectionSheet(context, ['Germany', 'Turkey']);
                             },
                           ),
                         ],
@@ -148,7 +149,9 @@ class SettingsScreenState extends ConsumerState<SettingsScreen> {
                         tiles: [
                           SettingsTile.navigation(
                             title: Text(
-                              state.selectedCity ?? 'Şehir Seçin',
+                              state.selectedCity != null && state.selectedCity!.isNotEmpty
+                                  ? state.selectedCity!
+                                  : 'Şehir Seçin',
                               style: TextStyle(color: ColorStyles.appBackGroundColor, fontSize: fontSize),
                             ),
                             leading: const Icon(Icons.location_on_outlined),
@@ -177,34 +180,54 @@ class SettingsScreenState extends ConsumerState<SettingsScreen> {
                               },
                               fontSize,
                             ),
-                            _buildSwitchTile(SalahTimeTypes.dhuhr, _dhuhrNotification, CupertinoIcons.sun_max_fill,
-                                (value) {
-                              setState(() {
-                                _dhuhrNotification = value;
-                              });
-                              _saveNotificationSettings(SalahTimesNotification.dhuhr, _dhuhrNotification);
-                            }, fontSize),
-                            _buildSwitchTile(SalahTimeTypes.asr, _asrNotification, CupertinoIcons.sun_haze_fill,
-                                (value) {
-                              setState(() {
-                                _asrNotification = value;
-                              });
-                              _saveNotificationSettings(SalahTimesNotification.asr, _asrNotification);
-                            }, fontSize),
-                            _buildSwitchTile(SalahTimeTypes.maghrib, _maghribNotification, CupertinoIcons.sunset_fill,
-                                (value) {
-                              setState(() {
-                                _maghribNotification = value;
-                              });
-                              _saveNotificationSettings(SalahTimesNotification.maghrib, _maghribNotification);
-                            }, fontSize),
-                            _buildSwitchTile(SalahTimeTypes.isha, _ishaNotification, CupertinoIcons.moon_stars_fill,
-                                (value) {
-                              setState(() {
-                                _ishaNotification = value;
-                              });
-                              _saveNotificationSettings(SalahTimesNotification.isha, _ishaNotification);
-                            }, fontSize),
+                            _buildSwitchTile(
+                              SalahTimeTypes.dhuhr,
+                              _dhuhrNotification,
+                              CupertinoIcons.sun_max_fill,
+                              (value) {
+                                setState(() {
+                                  _dhuhrNotification = value;
+                                });
+                                _saveNotificationSettings(SalahTimesNotification.dhuhr, _dhuhrNotification);
+                              },
+                              fontSize,
+                            ),
+                            _buildSwitchTile(
+                              SalahTimeTypes.asr,
+                              _asrNotification,
+                              CupertinoIcons.sun_haze_fill,
+                              (value) {
+                                setState(() {
+                                  _asrNotification = value;
+                                });
+                                _saveNotificationSettings(SalahTimesNotification.asr, _asrNotification);
+                              },
+                              fontSize,
+                            ),
+                            _buildSwitchTile(
+                              SalahTimeTypes.maghrib,
+                              _maghribNotification,
+                              CupertinoIcons.sunset_fill,
+                              (value) {
+                                setState(() {
+                                  _maghribNotification = value;
+                                });
+                                _saveNotificationSettings(SalahTimesNotification.maghrib, _maghribNotification);
+                              },
+                              fontSize,
+                            ),
+                            _buildSwitchTile(
+                              SalahTimeTypes.isha,
+                              _ishaNotification,
+                              CupertinoIcons.moon_stars_fill,
+                              (value) {
+                                setState(() {
+                                  _ishaNotification = value;
+                                });
+                                _saveNotificationSettings(SalahTimesNotification.isha, _ishaNotification);
+                              },
+                              fontSize,
+                            ),
                           ],
                         ),
                     ],
@@ -237,12 +260,18 @@ class SettingsScreenState extends ConsumerState<SettingsScreen> {
     await prefs.setString('selectedCity', city);
   }
 
+  Future<void> _saveSelectedCountry(String city) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('selectedCountry', city);
+  }
+
   Future<void> _saveNotificationSettings(String salahTimeNotificationName, bool value) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setBool(salahTimeNotificationName, value);
     final notifier = ref.read(cityProvider.notifier);
     final state = ref.read(cityProvider);
-    notifier.fetchSalahTimes7Days(state.selectedCity ?? defaultCity, salahTimeNotificationName);
+    notifier.fetchSalahTimes7Days(
+        state.selectedCountry ?? defaultCountry, state.selectedCity ?? defaultCity, salahTimeNotificationName);
   }
 
   AbstractSettingsTile _buildSwitchTile(
@@ -324,8 +353,8 @@ class SettingsScreenState extends ConsumerState<SettingsScreen> {
                                   final notifier = ref.read(cityProvider.notifier);
                                   final state = ref.watch(cityProvider);
                                   notifier.setSelectedCity = city;
-                                  if (state.selectedCity != null) {
-                                    await notifier.fetchPrayerTimes(city);
+                                  if (state.selectedCountry != null && state.selectedCity != null) {
+                                    await notifier.fetchPrayerTimes(state.selectedCountry!, city);
                                     if (_fajrNotification ||
                                         _dhuhrNotification ||
                                         _asrNotification ||
@@ -333,11 +362,102 @@ class SettingsScreenState extends ConsumerState<SettingsScreen> {
                                         _ishaNotification) {
                                       await LocalNotificationService.cancelAllNotifications();
                                       for (int i = 0; i < SalahTimesNotification.all.length; i++) {
-                                        notifier.fetchSalahTimes7Days(city, SalahTimesNotification.all[i]);
+                                        notifier.fetchSalahTimes7Days(state.selectedCountry ?? defaultCountry, city,
+                                            SalahTimesNotification.all[i]);
                                       }
                                     }
                                   }
                                   _saveSelectedCity(city);
+                                  if (context.mounted) Navigator.pop(context);
+                                },
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void _showCountrySelectionSheet(BuildContext context, List<String> countries) {
+    final fontSize = ref.watch(fontSizeProvider);
+
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (BuildContext context) {
+        return BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
+          child: Stack(
+            children: [
+              Container(
+                constraints: BoxConstraints(
+                  maxHeight: MediaQuery.of(context).size.height * 0.5,
+                ),
+                decoration: const BoxDecoration(
+                  color: ColorStyles.appBackGroundColor,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20),
+                  ),
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      width: 50,
+                      height: 2,
+                      margin: const EdgeInsets.only(bottom: 10, top: 10),
+                      decoration: BoxDecoration(
+                        color: ColorStyles.appTextColor,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                    Container(
+                      height: 40,
+                      width: double.infinity,
+                      color: Color.lerp(ColorStyles.appBackGroundColor, Colors.white, 0.2),
+                      child: Center(
+                        child: Text(
+                          'Ülke Seçin',
+                          style: TextStyle(
+                              fontSize: fontSize, fontWeight: FontWeight.bold, color: ColorStyles.appTextColor),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    Expanded(
+                      child: SingleChildScrollView(
+                        child: Center(
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: Countries.countryMap.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              final turkishCountry = Countries.countryMap.keys.elementAt(index);
+                              final englishCountry = Countries.countryMap[turkishCountry]!;
+
+                              return ListTile(
+                                title: Center(
+                                  child: Text(
+                                    turkishCountry,
+                                    style: const TextStyle(color: ColorStyles.appTextColor),
+                                  ),
+                                ),
+                                visualDensity: VisualDensity.compact,
+                                onTap: () async {
+                                  final notifier = ref.read(cityProvider.notifier);
+                                  notifier.setSelectedCountry = englishCountry; // İngilizcesini kaydet
+                                  await notifier.fetchCities();
+                                  notifier.setSelectedCity = '';
+                                  _saveSelectedCountry(englishCountry); // İngilizcesini sakla
                                   if (context.mounted) Navigator.pop(context);
                                 },
                               );

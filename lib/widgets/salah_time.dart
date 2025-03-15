@@ -65,7 +65,10 @@ class _SliderAndSalahTimeState extends ConsumerState<SalahTime> {
                             state.maghrib!,
                             state.isha!,
                           ]),
-                          state.cities != null && state.selectedCity!.isNotEmpty
+                          state.cities != null &&
+                                  state.selectedCity!.isNotEmpty &&
+                                  state.countries != null &&
+                                  state.selectedCountry!.isNotEmpty
                               ? Padding(
                                   padding: const EdgeInsets.only(
                                       right: defaultPadding / 2,

@@ -178,13 +178,21 @@ packages:
     source: hosted
     version: "1.1.1"
   collection:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: collection
       sha256: ee67cb0715911d28db6bf4af1026078bd6f0128b07a5f66fb2ed94ec6783c09a
       url: "https://pub.dev"
     source: hosted
     version: "1.18.0"
+  country_state_city:
+    dependency: "direct main"
+    description:
+      name: country_state_city
+      sha256: "400bf4f455503021d98a1f21eeec41c0aa0d7b2529ea0b07f6799ed3750513c3"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.6"
   crypto:
     dependency: transitive
     description:
@@ -488,6 +496,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.5.2"
+  in_app_review:
+    dependency: "direct main"
+    description:
+      name: in_app_review
+      sha256: "36a06771b88fb0e79985b15e7f2ac0f1142e903fe72517f3c055d78bc3bc1819"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.10"
+  in_app_review_platform_interface:
+    dependency: transitive
+    description:
+      name: in_app_review_platform_interface
+      sha256: fed2c755f2125caa9ae10495a3c163aa7fab5af3585a9c62ef4a6920c5b45f10
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.5"
   intl:
     dependency: "direct main"
     description:

@@ -80,6 +80,7 @@ class LocalNotificationService {
         'title': title,
         'body': body,
       });
+      print("Bildirim planlandı: $title $body $hour:$minute $day/$month/$year");
     } on PlatformException catch (e) {
       print("Bildirim planlanamadı: ${e.message}");
     }
@@ -89,6 +90,7 @@ class LocalNotificationService {
     const cancelNotifications = MethodChannel('cancel_notifications');
     try {
       await cancelNotifications.invokeMethod('cancel_notification', notificationID);
+      print("Bildirimler  iptal edildi: $notificationID");
     } catch (e) {
       print("Bildirim iptal edilemedi: $e");
     }
@@ -122,6 +124,7 @@ class LocalNotificationService {
     } catch (e) {
       print("Error fetching scheduled notifications: $e");
     }
+    print('SGlobals.notificationsList: ${Globals.notificationsList}');
   }
 
   static String? getNotificationsForSpecificDate(

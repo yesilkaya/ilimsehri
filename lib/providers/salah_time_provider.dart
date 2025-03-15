@@ -1,7 +1,10 @@
 import 'dart:convert';
 
+import 'package:collection/collection.dart';
+import 'package:country_state_city/country_state_city.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
+import 'package:ilimsehri/helper/countries.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constant/globals.dart';
@@ -17,6 +20,8 @@ class SalahTimeNotifier extends StateNotifier<SalahTimes> {
   set _setIsPageReady(bool value) => state = state.copyWith(isPageReady: value);
   set setIsTimeOfEzan(bool value) => state = state.copyWith(isTimeOfEzan: value);
   set _setCities(List<String> value) => state = state.copyWith(cities: value);
+  set _setCountries(List<String> value) => state = state.copyWith(countries: value);
+  set setSelectedCountry(String? value) => state = state.copyWith(selectedCountry: value);
   set setSelectedCity(String? value) => state = state.copyWith(selectedCity: value);
   set _setFajr(String value) => state = state.copyWith(fajr: value);
   set _setSunrise(String value) => state = state.copyWith(sunrise: value);
@@ -30,13 +35,23 @@ class SalahTimeNotifier extends StateNotifier<SalahTimes> {
     WidgetRef ref,
   ) async {
     if (!state.isPageReady) {
-      _loadSelectedCity(ref);
+      await _loadSelectedCountry(ref);
+      await _loadSelectedCity(ref);
+      await fetchCountries();
       await fetchCities();
-      if (state.selectedCity != null) {
-        await fetchPrayerTimes(state.selectedCity!);
+      if (state.selectedCountry != null && state.selectedCity != null) {
+        print('state.selectedCountry ${state.selectedCountry}');
+        print('state.selectedCity ${state.selectedCity}');
+        await fetchPrayerTimes(state.selectedCountry!, state.selectedCity!);
       }
       _setIsPageReady = true;
     }
+  }
+
+  Future<void> _loadSelectedCountry(WidgetRef ref) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? cachedCountry = prefs.getString('selectedCountry');
+    setSelectedCountry = cachedCountry;
   }
 
   Future<void> _loadSelectedCity(WidgetRef ref) async {
@@ -45,22 +60,24 @@ class SalahTimeNotifier extends StateNotifier<SalahTimes> {
     setSelectedCity = cachedCity;
   }
 
-  Future<void> fetchCities() async {
-    final response = await http.get(Uri.parse('https://turkiyeapi.dev/api/v1/provinces'));
-    if (response.statusCode == 200) {
-      Map<String, dynamic> data = jsonDecode(response.body);
+  Future<void> fetchCountries() async {
+    //List<Country> countries = await getAllCountries();
+    //List<String> countryNames = countries.map((country) => country.name).toList();
 
-      List<dynamic> citiesData = data['data']; // Şehir verilerini içeren liste
-
-      List<String> names = citiesData.map((city) => city['name'].toString()).toList();
-      _setCities = names;
-    } else {
-      throw Exception('Failed to load cities');
-    }
+    _setCountries = Countries.countryMap.keys.toList(); // Sadece Türkçe isimleri al
   }
 
-  Future<void> fetchPrayerTimes(String city) async {
-    String url = 'https://api.aladhan.com/v1/timingsByCity?city=$city&country=Turkey&method=13';
+  Future<void> fetchCities() async {
+    List<Country> countries = await getAllCountries();
+    String? code = countries.firstWhereOrNull((country) => country.name == state.selectedCountry)?.isoCode;
+    List<State> cities = await getStatesOfCountry(code ?? 'TR');
+
+    List<String> cityNames = cities.map((country) => country.name.split(' ').first).toList();
+    _setCities = cityNames;
+  }
+
+  Future<void> fetchPrayerTimes(String country, String city) async {
+    String url = 'https://api.aladhan.com/v1/timingsByCity?city=$city&country=$country&method=13';
     final response = await http.get(
       Uri.parse(url),
     );
@@ -86,18 +103,19 @@ class SalahTimeNotifier extends StateNotifier<SalahTimes> {
     }
   }
 
-  Future<void> fetchSalahTimes7Days(String city, String notificationName) async {
+  Future<void> fetchSalahTimes7Days(String country, String city, String notificationName) async {
     DateTime now = DateTime.now();
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool notificationValue = prefs.getBool(notificationName) ?? false;
 
-    for (int i = 0; i < 7; i++) {
+    for (int index = 0; index < 7; index++) {
       String formattedDate =
           '${now.day.toString().padLeft(2, '0')}-${now.month.toString().padLeft(2, '0')}-${now.year}';
-      final response = await http.get(
-        Uri.parse('https://api.aladhan.com/v1/timingsByCity/$formattedDate?city=$city&country=Turkey&method=13'),
-      );
+
+      String url = 'https://api.aladhan.com/v1/timingsByCity/$formattedDate?city=$city&country=$country&method=13';
+      print('url: $url');
+      final response = await http.get(Uri.parse(url));
 
       if (response.statusCode == 200) {
         final Map<String, dynamic> timings = json.decode(response.body)['data']['timings'];
@@ -107,7 +125,6 @@ class SalahTimeNotifier extends StateNotifier<SalahTimes> {
 
         SalahTimes10Days salahTimes = SalahTimes10Days(
           fajr: zeynebiyeFajrTime,
-          sunrise: timings['Sunrise'],
           dhuhr: zeynebiyeMaghribTime,
           asr: timings['Asr'],
           maghrib: timings['Maghrib'],
@@ -119,31 +136,32 @@ class SalahTimeNotifier extends StateNotifier<SalahTimes> {
           int fajrMinute = int.parse(salahTimes.fajr.substring(3, 5));
 
           if (notificationValue == true) {
-            setNotifications(now, fajrHour, fajrMinute, 0);
+            print('fajrHour: $fajrHour');
+            await setNotifications(now, fajrHour, fajrMinute, 0);
           }
         } else if (notificationName == SalahTimesNotification.dhuhr) {
           int dhuhrHour = int.parse(salahTimes.dhuhr.substring(0, 2));
           int dhuhrMinute = int.parse(salahTimes.dhuhr.substring(3, 5));
           if (notificationValue == true) {
-            setNotifications(now, dhuhrHour, dhuhrMinute, 1);
+            await setNotifications(now, dhuhrHour, dhuhrMinute, 1);
           }
         } else if (notificationName == SalahTimesNotification.asr) {
           int asrHour = int.parse(salahTimes.asr.substring(0, 2));
           int asrMinute = int.parse(salahTimes.asr.substring(3, 5));
           if (notificationValue == true) {
-            setNotifications(now, asrHour, asrMinute, 2);
+            await setNotifications(now, asrHour, asrMinute, 2);
           }
         } else if (notificationName == SalahTimesNotification.maghrib) {
           int maghribHour = int.parse(salahTimes.maghrib.substring(0, 2));
           int maghribMinute = int.parse(salahTimes.maghrib.substring(3, 5));
           if (notificationValue == true) {
-            setNotifications(now, maghribHour, maghribMinute, 3);
+            await setNotifications(now, maghribHour, maghribMinute, 3);
           }
         } else if (notificationName == SalahTimesNotification.isha) {
           int ishaHour = int.parse(salahTimes.isha.substring(0, 2));
           int ishaMinute = int.parse(salahTimes.isha.substring(3, 5));
           if (notificationValue == true) {
-            setNotifications(now, ishaHour, ishaMinute, 4);
+            await setNotifications(now, ishaHour, ishaMinute, 4);
           }
         }
       } else {
@@ -166,6 +184,7 @@ class SalahTimeNotifier extends StateNotifier<SalahTimes> {
     DateTime newTimeFajr = initialTimeFajr.add(const Duration(minutes: 25));
     String newTimeString =
         '${newTimeFajr.hour.toString().padLeft(2, '0')}:${newTimeFajr.minute.toString().padLeft(2, '0')}';
+    //    String newTimeString = '${'00'.toString().padLeft(2, '0')}:${'13'.toString().padLeft(2, '0')}';
     return newTimeString;
   }
 
@@ -181,8 +200,8 @@ class SalahTimeNotifier extends StateNotifier<SalahTimes> {
     return newTimeStringDhuhr;
   }
 
-  void setNotifications(DateTime now, int hour, int minute, int salahIndex) async {
-    LocalNotificationService.scheduleNotification(
+  Future<void> setNotifications(DateTime now, int hour, int minute, int salahIndex) async {
+    await LocalNotificationService.scheduleNotification(
         year: now.year,
         month: now.month,
         day: now.day,
@@ -194,5 +213,6 @@ class SalahTimeNotifier extends StateNotifier<SalahTimes> {
 
   Future<void> cancelNotification(DateTime now, String notificationName) async {
     await LocalNotificationService.separateNotificationsByDate(Globals.notificationsList, notificationName);
+    print('Bildirim iptal edildi: ${Globals.notificationsList}');
   }
 }

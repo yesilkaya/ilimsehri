@@ -13,6 +13,7 @@ const cocukImgPath = "assets/img/svg/cocuk.svg";
 const gaybImgPath = "assets/img/svg/gayb2.svg";
 const eyyamullahImgPath = "assets/img/svg/takvim.svg";
 const ramazanImagePath = "assets/img/svg/ramadan.svg";
+const ehlibeytImagePath = "assets/img/png/ih_harem.png";
 
 const whatsAppSvgPath = "assets/img/svg/social_media/whatsapp.svg";
 
@@ -158,7 +159,7 @@ class Constants {
     "Üzüntülerin Giderilmesini İsteme Hakkındaki Duası"
   ];
 
-  static var masumlar = [
+  static var ehlibeyt = [
     "Hz.Muhammed(s.a.a)",
     "İmam Ali(a.s)",
     "Hz.Fatıma(s.a)",
@@ -174,8 +175,6 @@ class Constants {
     "İmam Hasan Askeri(a.s)",
     "İmam Mehdi(a.f)"
   ];
-
-  static String deneme = sahifeSeccadiyeArray.toString();
 
   static var munacatlar = [
     "Muhiblerin Münacatı",

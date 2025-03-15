@@ -211,7 +211,7 @@ class GaybinDiliScreenState extends State<GaybinDiliScreen> {
                         ),
                         SizedBox(height: 10),
                         Text(
-                          "Hafız-ı Şirazi’nin şiirlerinden ilham alan bu uygulama, tamamen kültürel bir deneyim olarak tasarlanmıştır ve hiçbir dini veya manevi dayanak taşımamaktadır. \nİran kültüründe Hafız’ın dizelerinden niyet tutma geleneği, sadece edebiyatın ve şiirin derin anlamlarına duyulan hayranlıkla yaşatılan bir ritüeldir. Uygulamamız, bu geleneği modern bir dokunuşla sunarak, Hafız’ın zamansız dizelerini hayatınıza ilham ve estetik bir deneyim olarak katmayı amaçlar. Bu kartları dini bir inanış değil, edebiyatla kurulan kültürel bir bağ olarak görebilir; Hafız’ın şiirleriyle ilham dolu bir yolculuğa çıkabilirsiniz.",
+                          "Hafız-ı Şirazi’nin şiirlerinden ilham alan bu uygulama, tamamen kültürel bir deneyim olarak tasarlanmıştır ve hiçbir dini veya manevi dayanak taşımamaktadır. \nHafız’ın dizelerinden niyet tutma geleneği, sadece edebiyatın ve şiirin derin anlamlarına duyulan hayranlıkla yaşatılan bir ritüeldir. Uygulamamız, bu geleneği modern bir dokunuşla sunarak, Hafız’ın zamansız dizelerini hayatınıza ilham ve estetik bir deneyim olarak katmayı amaçlar. Bu kartları dini bir inanış değil, edebiyatla kurulan kültürel bir bağ olarak görebilir; Hafız’ın şiirleriyle ilham dolu bir yolculuğa çıkabilirsiniz.",
                           style: TextStyle(fontSize: 12, color: ColorStyles.appBackGroundColor, height: 1.5),
                           textAlign: TextAlign.justify,
                         ),

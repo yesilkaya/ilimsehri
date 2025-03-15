@@ -4,6 +4,7 @@ import '../../constant/route_constants.dart';
 import '../../view/screens/book_detail_screen.dart';
 import '../../view/screens/child_books_screen.dart';
 import '../../view/screens/dua/dualar_screen.dart';
+import '../../view/screens/ehlibeyt/ehlibeyt_screen.dart';
 import '../../view/screens/eyyamullah/eyyamullah_screen.dart';
 import '../../view/screens/gaybin_dili_screen.dart';
 import '../../view/screens/home_screen.dart';
@@ -64,6 +65,11 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case ramazanScreenRoute:
       return MaterialPageRoute(
         builder: (context) => const RamazanScreen(),
+      );
+
+    case ehlibeytScreenRoute:
+      return MaterialPageRoute(
+        builder: (context) => const EhlibeytScreen(),
       );
 
     case eyyamullahScreenRoute:

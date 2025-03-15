@@ -4,7 +4,6 @@ class Globals {
 
 class SalahTimes10Days {
   final String fajr;
-  final String sunrise;
   final String dhuhr;
   final String asr;
   final String maghrib;
@@ -12,7 +11,6 @@ class SalahTimes10Days {
 
   SalahTimes10Days({
     required this.fajr,
-    required this.sunrise,
     required this.dhuhr,
     required this.asr,
     required this.maghrib,
@@ -22,7 +20,6 @@ class SalahTimes10Days {
   factory SalahTimes10Days.fromJson(Map<String, dynamic> json) {
     return SalahTimes10Days(
       fajr: json['Fajr'],
-      sunrise: json['Sunrise'],
       dhuhr: json['Dhuhr'],
       asr: json['Asr'],
       maghrib: json['Maghrib'],
@@ -32,7 +29,7 @@ class SalahTimes10Days {
 
   @override
   String toString() {
-    return 'Fajr: $fajr, Sunrise: $sunrise, Dhuhr: $dhuhr, Asr: $asr, Maghrib: $maghrib, Isha: $isha';
+    return 'Fajr: $fajr,  Dhuhr: $dhuhr, Asr: $asr, Maghrib: $maghrib, Isha: $isha';
   }
 }
 

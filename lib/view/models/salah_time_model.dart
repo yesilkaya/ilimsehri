@@ -1,5 +1,7 @@
 class SalahTimes {
+  List<String>? countries;
   List<String>? cities;
+  String? selectedCountry;
   String? selectedCity;
   String? fajr;
   String? sunrise;
@@ -12,7 +14,9 @@ class SalahTimes {
   final bool isTimeOfEzan;
 
   SalahTimes({
+    this.countries,
     this.cities,
+    this.selectedCountry,
     this.selectedCity,
     this.fajr,
     this.sunrise,
@@ -26,7 +30,9 @@ class SalahTimes {
   });
 
   SalahTimes copyWith({
+    List<String>? countries,
     List<String>? cities,
+    String? selectedCountry,
     String? selectedCity,
     String? fajr,
     String? sunrise,
@@ -39,7 +45,9 @@ class SalahTimes {
     bool? isTimeOfEzan,
   }) {
     return SalahTimes(
+      countries: countries ?? this.countries,
       cities: cities ?? this.cities,
+      selectedCountry: selectedCountry ?? this.selectedCountry,
       selectedCity: selectedCity ?? this.selectedCity,
       fajr: fajr ?? this.fajr,
       sunrise: sunrise ?? this.sunrise,
@@ -55,7 +63,9 @@ class SalahTimes {
 
   factory SalahTimes.fromJson(Map<String, dynamic> json) {
     return SalahTimes(
+      countries: json['data'],
       cities: json['data'],
+      selectedCountry: 'Turkey',
       selectedCity: 'İstanbul',
       fajr: json['Fajr'],
       sunrise: json['Sunrise'],
@@ -70,7 +80,9 @@ class SalahTimes {
   }
 
   static SalahTimes defaultTimes = SalahTimes(
+    countries: [],
     cities: [],
+    selectedCountry: 'Turkey',
     selectedCity: 'İstanbul',
     fajr: '0:0',
     sunrise: '0:0',

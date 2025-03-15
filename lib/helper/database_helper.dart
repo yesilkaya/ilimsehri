@@ -114,11 +114,10 @@ class DatabaseHelper {
     return duaListesi;
   }
 
-  Future<List<Map<String, dynamic>>> ehlibeytinHayatiListe(int masumID) async {
+  Future<List<Map<String, dynamic>>> ehlibeytinHayatiListe(int ehlibeytId) async {
     var db = await _getDatabase();
-    var sonuc = await db.query("ehlibeyt", where: 'id = ?', whereArgs: [masumID]);
-    print("aa$sonuc");
-    return List<Map<String, dynamic>>.from(sonuc);
+    var result = await db.query("ehlibeyt", where: 'id = ?', whereArgs: [ehlibeytId]);
+    return List<Map<String, dynamic>>.from(result);
   }
 
   Future<String> ehlibeytinHayatiListeGetir(int masumID) async {

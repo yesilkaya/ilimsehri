@@ -59,7 +59,6 @@ class EyyamullahScreenState extends ConsumerState<EyyamullahScreen> {
             DateTime date = DateFormat("dd/MM/yyyy").parse(event.gregorianDate);
             return date.month == month;
           } catch (e) {
-            print("Tarih formatı hatalı: ${event.gregorianDate}");
             return false;
           }
         });

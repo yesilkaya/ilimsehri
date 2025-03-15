@@ -2,17 +2,16 @@ import 'package:flutter/material.dart';
 
 import '../../../constant/color_styles.dart';
 import '../../../constant/constants.dart';
-import '../../../helper/sound_name.dart';
-import 'dua_detail_screen.dart';
+import 'ehlibeyt_detail_screen.dart';
 
-class DualarScreen extends StatefulWidget {
-  const DualarScreen({super.key});
+class EhlibeytScreen extends StatefulWidget {
+  const EhlibeytScreen({super.key});
 
   @override
-  DualarScreenState createState() => DualarScreenState();
+  EhlibeytScreenState createState() => EhlibeytScreenState();
 }
 
-class DualarScreenState extends State<DualarScreen> {
+class EhlibeytScreenState extends State<EhlibeytScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +20,7 @@ class DualarScreenState extends State<DualarScreen> {
         slivers: <Widget>[
           SliverAppBar(
             title: Text(
-              'Dualar',
+              'Ehlibeyt',
               style: Theme.of(context).textTheme.titleLarge,
             ),
             centerTitle: true,
@@ -48,7 +47,7 @@ class DualarScreenState extends State<DualarScreen> {
           ),
           SliverList(
             delegate: SliverChildListDelegate(
-              dualarListWidget(context),
+              ehlibeytListWidget(context),
             ),
           ),
         ],
@@ -57,7 +56,7 @@ class DualarScreenState extends State<DualarScreen> {
   }
 }
 
-List<Widget> dualarListWidget(BuildContext context) {
+List<Widget> ehlibeytListWidget(BuildContext context) {
   return <Widget>[
     Container(
       margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
@@ -65,14 +64,14 @@ List<Widget> dualarListWidget(BuildContext context) {
       child: ListView.builder(
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
-        itemCount: Constants.dualar.length,
+        itemCount: Constants.ehlibeyt.length,
         itemBuilder: (context, index) {
-          String? duaSoundPath = SoundNames.getDuaSoundPath(Constants.dualar[index]);
-          return Constants.dualar.isEmpty
+          return Constants.ehlibeyt.isEmpty
               ? const Center(child: CircularProgressIndicator())
               : InkWell(
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => DuaDetailScreen(duaID: index)));
+                    Navigator.push(
+                        context, MaterialPageRoute(builder: (context) => EhlibeytDetailScreen(ehlibeytID: index)));
                   },
                   child: Card(
                     color: ColorStyles.cardColor,
@@ -82,7 +81,7 @@ List<Widget> dualarListWidget(BuildContext context) {
                     ),
                     child: ListTile(
                       title: Text(
-                        Constants.dualar[index],
+                        Constants.ehlibeyt[index],
                         style: const TextStyle(color: ColorStyles.appTextColor, fontSize: 14, fontFamily: 'Montserrat'),
                       ),
                       leading: CircleAvatar(
@@ -92,13 +91,6 @@ List<Widget> dualarListWidget(BuildContext context) {
                           style: const TextStyle(color: ColorStyles.appTextColor, fontSize: 20),
                         ),
                       ),
-                      trailing: duaSoundPath != null
-                          ? Icon(
-                              Icons.music_note,
-                              size: 16,
-                              color: ColorStyles.appTextColor.withOpacity(0.6),
-                            )
-                          : null,
                     ),
                   ),
                 );
