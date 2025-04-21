@@ -18,9 +18,8 @@ class RamazanListHelper {
 
   RamazanListHelper({required this.list, required this.title});
 
-  // GlobalKey'ler ve item yüksekliklerini saklayacak olan listeler
-  final Map<int, GlobalKey> itemKeys = {}; // Her öğe için GlobalKey
-  final List<double> itemHeights = []; // Öğelerin yüksekliklerini saklayacak liste
+  final Map<int, GlobalKey> itemKeys = {};
+  final List<double> itemHeights = [];
   final ScrollController _scrollController = ScrollController();
 
   Widget getList(int listIndex) {
@@ -33,7 +32,7 @@ class RamazanListHelper {
       return Container(
         color: ColorStyles.sepya,
         child: ListView.builder(
-          controller: _scrollController, // ScrollController'ı burada bağlıyoruz
+          controller: _scrollController,
           physics: const NeverScrollableScrollPhysics(),
           itemCount: list.length,
           shrinkWrap: true,
@@ -200,19 +199,6 @@ class RamazanListHelper {
   String cleanHtml(String rawHtml) {
     var document = htmlParser.parse(rawHtml);
     return document.body?.text ?? "";
-  }
-
-  // Belirli öğeye kaydırma işlemi
-  void scrollToIndex(int index) {
-    if (itemHeights.length > index) {
-      double scrollOffset = itemHeights.sublist(0, index).fold(0, (sum, height) => sum + height);
-
-      _scrollController.animateTo(
-        scrollOffset,
-        duration: const Duration(milliseconds: 500),
-        curve: Curves.easeInOut,
-      );
-    }
   }
 
   void _showShareDialog(BuildContext context, String text, String title) {

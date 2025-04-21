@@ -19,21 +19,20 @@ class HomeScreen extends StatefulWidget {
 
 class HomeScreenState extends State<HomeScreen> {
   final InAppReview _inAppReview = InAppReview.instance;
+  late SharedPreferences prefs;
 
   @override
   void initState() {
     if (PlatformHelper.isIos) getAllNotifications();
-    Future.delayed(const Duration(seconds: 3), _requestReview);
     _checkAndRequestReview();
-
     super.initState();
   }
 
   Future<void> _checkAndRequestReview() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs = await SharedPreferences.getInstance();
     bool hasReviewed = prefs.getBool('hasReviewed') ?? false;
 
-    if (!hasReviewed) {
+    if (hasReviewed == false) {
       await Future.delayed(const Duration(seconds: 3));
       await _requestReview();
       await prefs.setBool('hasReviewed', true); // İşaretle, bir daha açılmasın

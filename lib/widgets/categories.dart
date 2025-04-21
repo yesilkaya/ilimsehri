@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../constant/constants.dart';
-import '../constant/route_constants.dart';
-import '../view/models/product_model.dart';
+import '../view/models/category_model.dart';
 import 'cards/category_card.dart';
 
 class Categories extends StatelessWidget {
@@ -10,19 +9,6 @@ class Categories extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<String> pageRoute = [
-      kuranScreenRoute,
-      sahifeiSeccadiyeScreenRoute,
-      duaScreenRoute,
-      munacatScreenRoute,
-      zikirScreenRoute,
-      cocukScreenRoute,
-      eyyamullahScreenRoute,
-      gaybScreenRoute,
-      ramazanScreenRoute,
-      ehlibeytScreenRoute,
-    ];
-
     return Padding(
       padding: const EdgeInsets.only(left: 6, right: 6),
       child: Column(
@@ -44,11 +30,12 @@ class Categories extends StatelessWidget {
                 image: categoryList[index].image,
                 title: categoryList[index].title,
                 press: () {
-                  Navigator.pushNamed(context, pageRoute[index]);
+                  Navigator.pushNamed(context, categoryList[index].pageRoute);
                 },
               );
             },
-          )
+          ),
+          const SizedBox(height: 10)
         ],
       ),
     );

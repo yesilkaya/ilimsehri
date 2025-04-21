@@ -14,6 +14,10 @@ const gaybImgPath = "assets/img/svg/gayb2.svg";
 const eyyamullahImgPath = "assets/img/svg/takvim.svg";
 const ramazanImagePath = "assets/img/svg/ramadan.svg";
 const ehlibeytImagePath = "assets/img/png/ih_harem.png";
+const tefsirImagePath = "assets/img/svg/tefsir.svg";
+const aylarinAmelleriImagePath = "assets/img/svg/aylarin_amelleri.svg";
+const fatimaAlidirImagePath = "assets/img/png/fatima_ali.png";
+const fikihImagePath = "assets/img/svg/sahife.svg";
 
 const whatsAppSvgPath = "assets/img/svg/social_media/whatsapp.svg";
 
@@ -95,66 +99,66 @@ class Constants {
   }
 
   static String hicriTakvimGetir() {
-    HijriCalendar _today = new HijriCalendar.fromDate(dateTime);
-    String hicriTarih = '${_today.hDay}' + " " + hicriAylar[_today.hMonth - 1] + " " + '${_today.hYear}';
+    HijriCalendar today = HijriCalendar.fromDate(dateTime);
+    String hicriTarih = '${today.hDay}' + " " + hicriAylar[today.hMonth - 1] + " " + '${today.hYear}';
     return hicriTarih;
   }
 
   static var sahifeSeccadiyeArray = [
     "Mütercimin Önsözü",
     "Mukaddime",
-    "Allah\'a Hamd ve Sena İle İlgili Duası",
-    "Bu Hamd ve Senadan Sonra Resulullah\'a Salât ve Selâm İle İlgili Duası",
-    "Arş\'ı Taşıyan ve Tüm Mukarrep Meleklere Salât İle İlgili Duası",
+    "Allah'a Hamd ve Sena İle İlgili Duası",
+    "Bu Hamd ve Senadan Sonra Resulullah'a Salât ve Selâm İle İlgili Duası",
+    "Arş'ı Taşıyan ve Tüm Mukarrep Meleklere Salât İle İlgili Duası",
     "Peygamberlere Tâbi Olan ve Onları Tasdik Edenlere Salâtını İçeren Duası",
     "Kendisi ve Velâyetine İnanan Dostları Hakkındaki Duası",
     "Sabah ve Akşam Vakitlerinde Okuduğu Dua",
     "Zor Bir İşle Karşılaştığında veya Başına Üzücü Bir Hadise Geldiğinde ve Musibet Zamanlarında Okuduğu Dua",
-    "Sevilmeyen Şeyler, Kötü Ahlâk ve Çirkin İşlerden Allah\'a Sığınmakla İlgili Duası",
-    "Yüce Allah\'tan Bağışlanma Dilemeye Müştak Olma Hakkındaki Duası",
-    "Yüce Allah\'a Sığınmakla İlgili Duası",
+    "Sevilmeyen Şeyler, Kötü Ahlâk ve Çirkin İşlerden Allah'a Sığınmakla İlgili Duası",
+    "Yüce Allah'tan Bağışlanma Dilemeye Müştak Olma Hakkındaki Duası",
+    "Yüce Allah'a Sığınmakla İlgili Duası",
     "Güzel Akıbet İstemiyle İlgili Duası",
     "Günahları İtiraf ve Yüce Allah'a Dönüş (Tövbe) İstemi Hakkındaki Duası",
-    "Hacetleri Yüce Allah\'tan İsteme Hakkındaki Duası",
+    "Hacetleri Yüce Allah'tan İsteme Hakkındaki Duası",
     "Haksızlığa Uğradığı veya Zalimlerden Hoşlanmadığı Bir Davranış Gördüğü Zaman Okuduğu Dua",
     "Hastalandığı veya Bir Musibet ve Belâyla Karşılaştığı Zaman Okuduğu Dua",
     "Günahlarının Bağışlanması ve Kusurlarının Affedilmesi İçin Yalvardığı Zaman Okuduğu Dua",
-    "Şeytan\'dan Söz Edildiğinde Ondan,Onun Düşmanlığından ve Tuzaklarından Allah\'a Sığınınca Okuduğu Dua",
+    "Şeytan'dan Söz Edildiğinde Ondan,Onun Düşmanlığından ve Tuzaklarından Allah'a Sığınınca Okuduğu Dua",
     "Korktuğu Bir Durum Kendisinden Uzaklaştığı veya İstediği Şeye Çabuk Ulaştığı Zaman Okuduğu Dua",
     "Kuraklıktan Sonra Yağmur Talebiyle İlgili Duası",
     "Yüce Erdemler ve Beğenilen Davranışlarla İlgili Duası",
     "Bir Şey İçin Üzüldüğü ve Günahlardan Dolayı Tasalandığı Zaman Okuduğu Dua",
     "Sıkıntılı, Meşakkatli ve İşlerin Zorlaştığı Zamanlarda Okuduğu Dua",
-    "Allah\'tan Afiyet ve Şükrünü İstediği Zaman Okuduğu Dua",
+    "Allah'tan Afiyet ve Şükrünü İstediği Zaman Okuduğu Dua",
     "Anne ve Babası Hakkındaki Duası",
     "Çocukları Hakkındaki Duası",
     "Komşuları ve Dostlarını Andığında Okuduğu Dua",
     "Sınır Bekçileri Hakkındaki Duası",
-    "Yüce Allah\'a İltica Ederek Okuduğu Dua",
+    "Yüce Allah'a İltica Ederek Okuduğu Dua",
     "Geçim Sıkıntısı Çektiğinde Okuduğu Dua",
-    "Borcu Ödemekte Allah\'tan Yardım İsteme Hakkındaki Duası",
+    "Borcu Ödemekte Allah'tan Yardım İsteme Hakkındaki Duası",
     "Tövbe ve Tövbe İstemiyle İlgili Duası",
     "Gece Namazının Ardından Günahları İtiraf Hususunda Kendisi İçin Duası",
-    "Allah\'tan Hayırlı Olanı İsteme Hakkındaki Duası",
+    "Allah'tan Hayırlı Olanı İsteme Hakkındaki Duası",
     "Musibete Uğradığı veya Günah Sebebiyle Kötü Duruma Düşen Birini Gördüğü Zaman Okuduğu Dua",
     "Dünya Ehline Bakınca Okuduğu Kaza ve Kadere Rıza Hakkındaki Duası",
     "Bulutlara ve Şimşeğe Baktığı ve Gök Gürültüsünü Duyduğu Zaman Okuduğu Dua",
-    "Allah\'ın Şükrünü Yerine Getirmekten Âciz Olduğunu İtiraf Ettiğinde Okuduğu Dua",
-    "Kulların Haklarından Dolayı Allah\'tan Özür Dileme ve Ateşten Kurtuluş İsteme Hakkındaki Duası",
-    "Allah\'tan Af ve Rahmet Dileme Hakkındaki Duası",
+    "Allah'ın Şükrünü Yerine Getirmekten Âciz Olduğunu İtiraf Ettiğinde Okuduğu Dua",
+    "Kulların Haklarından Dolayı Allah'tan Özür Dileme ve Ateşten Kurtuluş İsteme Hakkındaki Duası",
+    "Allah'tan Af ve Rahmet Dileme Hakkındaki Duası",
     "Birinin Ölüm Haberini Aldığı veya Ölümü Hatırladığı Zaman Okuduğu Dua",
     "Ayıpların Örtülmesi ve Günahlardan Korunma İstemiyle İlgili Duası",
-    "Kur\'an\'ı Hatmettiğinde Okuduğu Dua",
+    "Kur'an'ı Hatmettiğinde Okuduğu Dua",
     "Hilâle Baktığı Zaman Okuduğu Dua",
     "Ramazan Ayı Girdiğinde Okuduğu Dua",
     "Ramazan Ayıyla Vedalaştığında Okuduğu Dua",
     "Ramazan Bayramı Günü Bayram Namazını Kıldıktan Sonra Ayağa Kalkıp Kıbleye Yönelerek ve Cuma Günü Okuduğu Dua",
     "Arefe Günü Okuduğu Dua",
     "Kurban Bayramı Günü ve Cuma Günü Okuduğu Dua",
-    "Düşmanların Hilelerinin Def\'i ve Şerlerinin Geri Çevrilmesi Hakkındaki Duası",
-    "Allah\'tan Korkma Hakkındaki Duası",
-    "Allah\'a Yalvarıp Yakarma ve Düşkünlüğünü Dile Getirme Hakkındaki Duası",
-    "Yüce Allah\'a Yalvarırken Israrcı Olma Hakkındaki Duası",
+    "Düşmanların Hilelerinin Def'i ve Şerlerinin Geri Çevrilmesi Hakkındaki Duası",
+    "Allah'tan Korkma Hakkındaki Duası",
+    "Allah'a Yalvarıp Yakarma ve Düşkünlüğünü Dile Getirme Hakkındaki Duası",
+    "Yüce Allah'a Yalvarırken Israrcı Olma Hakkındaki Duası",
     "Yüce Allah Karşısında Zelillik İtirafıyla İlgili Duası",
     "Üzüntülerin Giderilmesini İsteme Hakkındaki Duası"
   ];
@@ -176,13 +180,19 @@ class Constants {
     "İmam Mehdi(a.f)"
   ];
 
+  static var duaMunacatlar = [
+    "Dualar ",
+    "Münacatlar",
+    "Sahife-i Seccadiye",
+  ];
+
   static var munacatlar = [
     "Muhiblerin Münacatı",
     "Korkakların Münacatı",
     "İtaat Edenlerin Münacatı",
     "Muhtaçların Münacatı",
     "Ariflerin Münacatı",
-    "Hz.Ali\'nin (a.s) Küfe Camisindeki Münacatı",
+    "Hz.Ali'nin (a.s) Küfe Camisindeki Münacatı",
     "Münacat-ı Şabaniyye",
     "Müridlerin Münacatı",
     "Sığınanların Münacatı",
@@ -212,7 +222,17 @@ class Constants {
     "Namaz Sonrası Dua",
     "Nudbe Duası",
     "Tevessül Duası",
-    "Ziyaret-i Aşura"
+    "Ziyaret-i Aşura",
+    "Nâdi Ali Duası"
+  ];
+  static var fikih = [
+    FikihModel(title: "Namaz Rehberi", pdfUrl: "https://www.caferilik.com/pdf/Namaz%20Rehberi-www.caferilik.com.pdf?"),
+    FikihModel(title: " Hac Rehberi", pdfUrl: "https://www.caferilik.com/pdf/Hac%20Rehberi-www.caferilik.com.pdf"),
+    FikihModel(title: "Oruç ve Hükümleri ", pdfUrl: "https://www.caferilik.com/pdf/Oruc-www.caferilik.com.pdf?"),
+    FikihModel(
+        title: "Doğru Ticaret ve Helal Kazanç",
+        pdfUrl: "https://www.caferilik.com/pdf/Dogru%20Ticaret%20ve%20Helal%20kazanc-www.caferilik.com.pdf?"),
+    FikihModel(title: "Genç İlmihali", pdfUrl: "https://www.caferilik.com/pdf/Genc%20ilmihali-www.caferilik.com.pdf?"),
   ];
 
   static var ramazanAyiAmelleri = [
@@ -221,7 +241,7 @@ class Constants {
     "Kadir Gecesi Amelleri",
     "Özel Gün ve Gecelerin Amelleri",
     "Namazlardan Sonra Okunan Dua",
-    "Resullah\'ın (s.a.a) Duası"
+    "Resullah'ın (s.a.a) Duası"
   ];
 
   static var aylar = [
@@ -293,4 +313,24 @@ class Constants {
     "Ey Alemlerin Rabbi",
     "Ey Celal ve İkram Sahibi",
   ];
+
+  static String fatimaAlidirDesc = """
+Bu sayfa, “Fatıma Ali'dir” kitabından derlenen kıymetli pasajlarla, Hz. Fatıma (s.a) ve Hz. Ali’nin (a.s) örnek hayatına kısa ama derin yolculuklar sunar.
+
+Hz. Fatıma (s.a) ve Hz. Ali'nin (a.s) tertemiz hayatından kesitler; sabrın, iffetin, adaletin ve Allah’a teslimiyetin en parlak örneklerini gözler önüne serer.
+
+Her bir kıssa bir feyz pınarıdır...
+Okudukça gönlünüzde bir huzur, kalbinizde bir yakınlık hissedecek, o iki yüce ruhun izini süreceksiniz.
+
+ """;
+
+  static String supportUs =
+      "Bu projeyi gönüllülükle geliştiriyoruz. Dilerseniz aşağıdaki IBAN aracılığıyla maddi destek verebilir, bu çabanın daha fazla insana ulaşmasına katkı sağlayabilirsiniz.";
+}
+
+class FikihModel {
+  String? pdfUrl;
+  String? title;
+
+  FikihModel({this.pdfUrl, this.title});
 }

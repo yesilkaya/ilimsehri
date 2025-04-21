@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import '../../../helper/time_helper.dart';
 import '../home_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -69,16 +70,8 @@ class SplashScreenState extends State<SplashScreen> {
         // When the user releases the image, resume the timer
         resumeTimer();
       },
-      child: checkDate() ? const RamazanSplash() : const DefaultSplash(),
+      child: TimeHelper.checkDate() ? const RamazanSplash() : const DefaultSplash(),
     );
-  }
-
-  bool checkDate() {
-    DateTime now = DateTime.now();
-    DateTime startDate = DateTime(2025, 2, 25);
-    DateTime endDate = DateTime(2025, 3, 30);
-
-    return now.isAfter(startDate) && now.isBefore(endDate);
   }
 }
 

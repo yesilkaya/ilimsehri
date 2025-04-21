@@ -171,7 +171,7 @@ class SalahTimeNotifier extends StateNotifier<SalahTimes> {
       now = now.add(const Duration(days: 1));
     }
     if (notificationValue == false) {
-      await cancelNotification(now, notificationName);
+      await cancelNotification(notificationName);
     }
     await LocalNotificationService.getScheduledNotifications();
   }
@@ -211,7 +211,7 @@ class SalahTimeNotifier extends StateNotifier<SalahTimes> {
         body: NotificationBodies.all[salahIndex]);
   }
 
-  Future<void> cancelNotification(DateTime now, String notificationName) async {
+  Future<void> cancelNotification(String notificationName) async {
     await LocalNotificationService.separateNotificationsByDate(Globals.notificationsList, notificationName);
     print('Bildirim iptal edildi: ${Globals.notificationsList}');
   }

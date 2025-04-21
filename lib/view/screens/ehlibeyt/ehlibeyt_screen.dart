@@ -28,20 +28,16 @@ class EhlibeytScreenState extends State<EhlibeytScreen> {
             backgroundColor: ColorStyles.appBackGroundColor,
             leading: const BackButton(color: ColorStyles.appTextColor),
           ),
+          const SliverPadding(padding: EdgeInsets.all(30)),
           SliverAppBar(
             backgroundColor: ColorStyles.appBackGroundColor,
-            expandedHeight: 180,
-            flexibleSpace: Stack(
-              children: <Widget>[
-                Container(
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      alignment: Alignment.center,
-                      image: AssetImage("assets/img/bismillah3.jpg"),
-                    ),
-                  ),
+            flexibleSpace: Container(
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  alignment: Alignment.center,
+                  image: AssetImage("assets/img/bismillah.jpg"),
                 ),
-              ],
+              ),
             ),
             leading: Container(),
           ),

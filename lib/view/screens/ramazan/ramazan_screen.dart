@@ -4,6 +4,7 @@ import 'package:ilimsehri/view/screens/ramazan/ramazan_detail_screen.dart';
 
 import '../../../constant/color_styles.dart';
 import '../../../constant/constants.dart';
+import '../../../helper/time_helper.dart';
 import '../imsakiye_screen.dart';
 
 class RamazanScreen extends StatefulWidget {
@@ -30,20 +31,16 @@ class RamazanScreenState extends State<RamazanScreen> {
             backgroundColor: ColorStyles.appBackGroundColor,
             leading: const BackButton(color: ColorStyles.appTextColor),
           ),
+          const SliverPadding(padding: EdgeInsets.all(30)),
           SliverAppBar(
             backgroundColor: ColorStyles.appBackGroundColor,
-            expandedHeight: 180,
-            flexibleSpace: Stack(
-              children: <Widget>[
-                Container(
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      alignment: Alignment.center,
-                      image: AssetImage("assets/img/bismillah3.jpg"),
-                    ),
-                  ),
+            flexibleSpace: Container(
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  alignment: Alignment.center,
+                  image: AssetImage("assets/img/bismillah.jpg"),
                 ),
-              ],
+              ),
             ),
             leading: Container(),
           ),
@@ -59,6 +56,7 @@ class RamazanScreenState extends State<RamazanScreen> {
 }
 
 List<Widget> ramazanListWidget(BuildContext context) {
+  int listLength = Constants.ramazanAyiAmelleri.length;
   return <Widget>[
     Container(
       margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
@@ -66,12 +64,12 @@ List<Widget> ramazanListWidget(BuildContext context) {
       child: ListView.builder(
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
-        itemCount: Constants.ramazanAyiAmelleri.length + 1,
+        itemCount: TimeHelper.checkDate() ? listLength + 1 : listLength,
         itemBuilder: (context, index) {
-          if (index == 0) {
+          if (index == 0 && TimeHelper.checkDate()) {
             return InkWell(
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const FullScreenImagePage()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const ImsakiyeScreen()));
               },
               child: Card(
                 color: ColorStyles.cardColor,
@@ -95,8 +93,11 @@ List<Widget> ramazanListWidget(BuildContext context) {
               ? const Center(child: CircularProgressIndicator())
               : InkWell(
                   onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => RamazanDetailScreen(ramazanAmelID: index - 1)));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                RamazanDetailScreen(ramazanAmelID: TimeHelper.checkDate() ? index - 1 : index)));
                   },
                   child: Card(
                     color: ColorStyles.cardColor,
@@ -106,7 +107,7 @@ List<Widget> ramazanListWidget(BuildContext context) {
                     ),
                     child: ListTile(
                       title: Text(
-                        Constants.ramazanAyiAmelleri[index - 1],
+                        Constants.ramazanAyiAmelleri[TimeHelper.checkDate() ? index - 1 : index],
                         style: const TextStyle(color: ColorStyles.appTextColor, fontSize: 14, fontFamily: 'Montserrat'),
                       ),
                       leading: CircleAvatar(

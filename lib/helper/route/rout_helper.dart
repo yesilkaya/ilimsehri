@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:ilimsehri/view/screens/dua_munacat.dart';
+import 'package:ilimsehri/view/screens/ehlibeyt/ehlibeyt_screen.dart';
+import 'package:ilimsehri/view/screens/eyyamullah/eyyamullah_screen.dart';
+import 'package:ilimsehri/view/screens/fatima_alidir_screen.dart';
+import 'package:ilimsehri/view/screens/tefsir/tefsir_list_screen.dart';
 
 import '../../constant/route_constants.dart';
+import '../../view/screens/aylarin_amelleri/aylarin_amelleri.dart';
 import '../../view/screens/book_detail_screen.dart';
 import '../../view/screens/child_books_screen.dart';
-import '../../view/screens/dua/dualar_screen.dart';
-import '../../view/screens/ehlibeyt/ehlibeyt_screen.dart';
-import '../../view/screens/eyyamullah/eyyamullah_screen.dart';
+import '../../view/screens/fikih/fikih_screen.dart';
 import '../../view/screens/gaybin_dili_screen.dart';
 import '../../view/screens/home_screen.dart';
 import '../../view/screens/kuran/sureler_list_screen.dart';
-import '../../view/screens/munacat/munacatlar_screen.dart';
 import '../../view/screens/ramazan/ramazan_screen.dart';
-import '../../view/screens/sahife/sahifei_seccadiye_screen.dart';
 import '../../view/screens/settings_screen.dart';
 import '../../view/screens/splash/splash_screen.dart';
 import '../../view/screens/zikir/zikir_screen.dart';
@@ -33,19 +35,14 @@ Route<dynamic> generateRoute(RouteSettings settings) {
         builder: (context) => const SurelerListScreen(),
       );
 
-    case sahifeiSeccadiyeScreenRoute:
+    case fikihScreenRoute:
       return MaterialPageRoute(
-        builder: (context) => SahifeiSeccadiyeScreen(),
+        builder: (context) => const FikihScreen(),
       );
 
-    case duaScreenRoute:
+    case duaMunaacatScreenRoute:
       return MaterialPageRoute(
-        builder: (context) => DualarScreen(),
-      );
-
-    case munacatScreenRoute:
-      return MaterialPageRoute(
-        builder: (context) => const MunacatlarScreen(),
+        builder: (context) => const DuaMunacatScreen(),
       );
 
     case zikirScreenRoute:
@@ -70,6 +67,21 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case ehlibeytScreenRoute:
       return MaterialPageRoute(
         builder: (context) => const EhlibeytScreen(),
+      );
+
+    case tefsirScreenRoute:
+      return MaterialPageRoute(
+        builder: (context) => const TefsirListScreen(),
+      );
+
+    case aylarinAmelleriScreenRoute:
+      return MaterialPageRoute(
+        builder: (context) => const AylarinAmelleri(),
+      );
+
+    case fatimaAlidirScreenRoute:
+      return MaterialPageRoute(
+        builder: (context) => const FatimaAlidirScreen(),
       );
 
     case eyyamullahScreenRoute:

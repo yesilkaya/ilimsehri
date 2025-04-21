@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../constant/color_styles.dart';
 import '../constant/constants.dart';
 import '../constant/salah_times.dart';
+import '../helper/time_helper.dart';
 import '../providers/salah_time_provider.dart';
 import 'salah_timer_widget.dart';
 
@@ -107,29 +108,31 @@ class _SliderAndSalahTimeState extends ConsumerState<SalahTime> {
                       )),
                 ],
               ),
-              Positioned(
-                  top: 12,
-                  right: 6,
-                  child: IconButton(
-                    color: Colors.grey,
-                    onPressed: () {
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        duration: const Duration(seconds: 7),
-                        backgroundColor: ColorStyles.appTextColor,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        content: const Center(
-                          child: Text(
-                            "Ramazan ayı başlangıcı taklit ettiğiniz müçtehidin fetvasına göre farklılık gösterebilir.",
-                            style: TextStyle(color: ColorStyles.appBackGroundColor),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                      ));
-                    },
-                    icon: const Icon(Icons.info_outline),
-                  )),
+              TimeHelper.checkDate()
+                  ? Positioned(
+                      top: 12,
+                      right: 6,
+                      child: IconButton(
+                        color: Colors.grey,
+                        onPressed: () {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            duration: const Duration(seconds: 7),
+                            backgroundColor: ColorStyles.appTextColor,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            content: const Center(
+                              child: Text(
+                                "Ramazan ayı başlangıcı taklit ettiğiniz müçtehidin fetvasına göre farklılık gösterebilir.",
+                                style: TextStyle(color: ColorStyles.appBackGroundColor),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ));
+                        },
+                        icon: const Icon(Icons.info_outline),
+                      ))
+                  : Container(),
             ],
           )
         : Container();

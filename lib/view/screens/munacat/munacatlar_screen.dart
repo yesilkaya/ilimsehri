@@ -13,55 +13,48 @@ class MunacatlarScreen extends StatefulWidget {
 }
 
 class MunacatlarScreenState extends State<MunacatlarScreen> {
-  List<String> sahifeList = Constants.sahifeSeccadiyeArray;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorStyles.appBackGroundColor,
-      body: Container(
-        child: CustomScrollView(
-          slivers: <Widget>[
-            SliverAppBar(
-              title: Text(
-                'Munacatlar',
-                style: Theme.of(context).textTheme.titleLarge,
+      body: CustomScrollView(
+        slivers: <Widget>[
+          SliverAppBar(
+            title: Text(
+              'Munacatlar',
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+            centerTitle: true,
+            pinned: true,
+            backgroundColor: ColorStyles.appBackGroundColor,
+            leading: SizedBox(
+              width: 12,
+              height: 12,
+              child: BackButton(
+                style: ButtonStyle(iconSize: MaterialStateProperty.all(24.0)),
+                color: ColorStyles.appTextColor,
               ),
-              centerTitle: true,
-              pinned: true,
-              backgroundColor: ColorStyles.appBackGroundColor,
-              leading: SizedBox(
-                width: 12,
-                height: 12,
-                child: BackButton(
-                  style: ButtonStyle(iconSize: MaterialStateProperty.all(24.0)),
-                  color: ColorStyles.appTextColor,
+            ),
+          ),
+          const SliverPadding(padding: EdgeInsets.all(30)),
+          SliverAppBar(
+            backgroundColor: ColorStyles.appBackGroundColor,
+            flexibleSpace: Container(
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  alignment: Alignment.center,
+                  image: AssetImage("assets/img/bismillah.jpg"),
                 ),
               ),
             ),
-            SliverAppBar(
-              backgroundColor: ColorStyles.appBackGroundColor,
-              expandedHeight: 180,
-              flexibleSpace: Stack(
-                children: <Widget>[
-                  Container(
-                    decoration: const BoxDecoration(
-                      image: DecorationImage(
-                        alignment: Alignment.center,
-                        image: AssetImage("assets/img/bismillah3.jpg"),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              leading: Container(),
+            leading: Container(),
+          ),
+          SliverList(
+            delegate: SliverChildListDelegate(
+              dualarListWidget(context),
             ),
-            SliverList(
-              delegate: SliverChildListDelegate(
-                dualarListWidget(context),
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

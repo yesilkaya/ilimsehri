@@ -21,4 +21,7 @@ class ColorStyles {
   static const kGreyColor = Color(0xFFAAAAAA);
   static const kLightGreyColor = Color(0xFFF4F4F4);
   static const kWhiteColor = Color(0xFFFFFFFF);
+
+  static const color = const Color.fromRGBO(46, 45, 69, 1);
+  static const color2 = const Color.fromRGBO(238, 226, 126, 1);
 }

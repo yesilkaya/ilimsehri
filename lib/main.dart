@@ -33,9 +33,8 @@ class MyApp extends StatelessWidget {
       onGenerateRoute: generateRoute,
       initialRoute: SplashScreenRoute,
       builder: (context, child) {
-        // textScaleFactor'ı sabitliyoruz
         return MediaQuery(
-          data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0), // Font boyutunu sabitliyoruz
+          data: MediaQuery.of(context).copyWith(textScaler: const TextScaler.linear(1.0)),
           child: child!,
         );
       },

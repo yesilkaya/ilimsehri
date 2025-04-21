@@ -131,12 +131,12 @@ class SettingsScreenState extends ConsumerState<SettingsScreen> {
                         tiles: [
                           SettingsTile.navigation(
                             title: Text(
-                              state.selectedCountry ?? 'ülke Seçin',
+                              getKeyFromValue(Countries.countryMap, state.selectedCountry) ?? 'Ülke Seçin',
                               style: TextStyle(color: ColorStyles.appBackGroundColor, fontSize: fontSize),
                             ),
                             leading: const Icon(Icons.location_on_outlined),
                             onPressed: (context) {
-                              _showCountrySelectionSheet(context, ['Germany', 'Turkey']);
+                              _showCountrySelectionSheet(context);
                             },
                           ),
                         ],
@@ -344,7 +344,7 @@ class SettingsScreenState extends ConsumerState<SettingsScreen> {
                             physics: const NeverScrollableScrollPhysics(),
                             itemCount: cities?.length ?? 0,
                             itemBuilder: (BuildContext context, int index) {
-                              final city = state.cities![index];
+                              String city = state.cities?[index] ?? '';
                               return ListTile(
                                 title:
                                     Center(child: Text(city, style: const TextStyle(color: ColorStyles.appTextColor))),
@@ -386,7 +386,13 @@ class SettingsScreenState extends ConsumerState<SettingsScreen> {
     );
   }
 
-  void _showCountrySelectionSheet(BuildContext context, List<String> countries) {
+  String? getKeyFromValue(Map<String, String> map, String? value) {
+    return map.entries.firstWhere((element) => element.value == value, orElse: () => const MapEntry('', '')).key.isEmpty
+        ? null
+        : map.entries.firstWhere((element) => element.value == value).key;
+  }
+
+  void _showCountrySelectionSheet(BuildContext context) {
     final fontSize = ref.watch(fontSizeProvider);
 
     showModalBottomSheet(

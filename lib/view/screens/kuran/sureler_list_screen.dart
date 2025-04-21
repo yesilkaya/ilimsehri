@@ -56,21 +56,17 @@ class SurelerListScreenState extends State<SurelerListScreen> {
               color: ColorStyles.appTextColor,
             ),
           ),
+          const SliverPadding(padding: EdgeInsets.all(30)),
           SliverAppBar(
             backgroundColor: ColorStyles.appBackGroundColor,
-            expandedHeight: 200,
-            flexibleSpace: Stack(
-              children: <Widget>[
-                Container(
-                  decoration: const BoxDecoration(
-                    color: ColorStyles.appBackGroundColor,
-                    image: DecorationImage(
-                      alignment: Alignment.center,
-                      image: AssetImage("assets/img/bismillah3.jpg"),
-                    ),
-                  ),
+            flexibleSpace: Container(
+              decoration: const BoxDecoration(
+                color: ColorStyles.appBackGroundColor,
+                image: DecorationImage(
+                  alignment: Alignment.center,
+                  image: AssetImage("assets/img/bismillah.jpg"),
                 ),
-              ],
+              ),
             ),
             leading: Container(),
           ),
@@ -86,7 +82,7 @@ class SurelerListScreenState extends State<SurelerListScreen> {
   sureListWidget() {
     return <Widget>[
       Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.only(top: 40, right: 10, left: 10),
         child: TextField(
           style: TextStyle(color: color2, fontSize: 18),
           onChanged: (value) {

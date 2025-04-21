@@ -67,6 +67,22 @@ class ListHelper {
                         padding: const EdgeInsets.only(right: 20, left: 30, bottom: 25, top: 10),
                         child: Column(
                           children: [
+                            listType == ListType.sure && index == 0 && !title.toLowerCase().contains('fatiha')
+                                ? Column(
+                                    children: [
+                                      Text(
+                                        'بسم الله الرحمن الرحیم',
+                                        textAlign: TextAlign.justify,
+                                        textDirection: TextDirection.rtl,
+                                        style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                                            color: ColorStyles.appBackGroundColor,
+                                            height: 1.6,
+                                            fontSize: fontSize + 10),
+                                      ),
+                                      const SizedBox(height: 20),
+                                    ],
+                                  )
+                                : Container(),
                             Text(
                               listType == ListType.sure
                                   ? list[index].ayet_arapca.replaceAll('<br>', ' \n') ?? ''
@@ -78,19 +94,20 @@ class ListHelper {
                                   .headlineMedium!
                                   .copyWith(color: ColorStyles.kahveRengi, height: 1.6, fontSize: fontSize + 10),
                             ),
-                            if (listType != ListType.sure) _getDivider(list[index].turkce),
+                            if (listType != ListType.sure) _getDivider(text: list[index].turkce),
                             if (listType != ListType.sure)
                               Align(
                                 alignment: Alignment.centerLeft,
                                 child: SelectableText(
                                   turkce.replaceAll('<br>', ' \n'),
                                   style: GoogleFonts.lora(
-                                    textStyle: TextStyle(fontSize: fontSize, color: Colors.black),
+                                    textStyle: TextStyle(fontSize: fontSize, color: Colors.black, height: 1.6),
                                   ),
+                                  textAlign: TextAlign.justify,
                                 ),
                               ),
                             if (!(listType == ListType.sahife || listType == ListType.munacat))
-                              _getDivider(list[index].meal),
+                              _getDivider(text: list[index].meal),
                             if (!(listType == ListType.sahife || listType == ListType.munacat))
                               SelectableText(
                                 list[index].meal ?? '',
@@ -193,7 +210,7 @@ class ListHelper {
     );
   }
 
-  StatelessWidget _getDivider(String? text) {
+  StatelessWidget _getDivider({String? text}) {
     return text != null && text.isNotEmpty && text != ' '
         ? const Divider(color: ColorStyles.kahveRengi, height: 30, thickness: 0.2)
         : Container();

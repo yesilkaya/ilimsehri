@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../constant/color_styles.dart';
 
-class FullScreenImagePage extends StatelessWidget {
-  const FullScreenImagePage({super.key});
+class ImsakiyeScreen extends StatelessWidget {
+  const ImsakiyeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +11,7 @@ class FullScreenImagePage extends StatelessWidget {
       backgroundColor: ColorStyles.appBackGroundColor,
       appBar: AppBar(
         title: Text(
-          'Ramazan İmsakiyesi 2025 (İstanbul)',
+          'Ramazan İmsakiyesi ${DateTime.now().year} (İstanbul)',
           style: Theme.of(context).textTheme.titleSmall,
         ),
         centerTitle: true,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ilimsehri/view/screens/drawer_screens/about_screen.dart';
-import 'package:ilimsehri/view/screens/drawer_screens/join_us.dart';
+import 'package:ilimsehri/view/screens/drawer_screens/join_us_screen.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -33,15 +33,18 @@ class DrawerScreen extends StatelessWidget {
           Expanded(
             child: Column(
               children: [
-                _buildDrawerItem(context, Icons.info_outline, "Hakkında", () => _navigateTo(context, AboutUsPage())),
+                _buildDrawerItem(
+                    context, Icons.info_outline, "Hakkında", () => _navigateTo(context, const AboutUsPage())),
                 _buildDrawerItem(context, Icons.phone, "WhatsApp", _whatsAppOnTap,
                     svgIcon:
                         IconHelper.getSvgIcon(name: 'svg/social_media/whatsapp', size: 23, color: ColorStyles.sepya)),
                 _buildDrawerItem(
-                    context, Icons.person_add_alt, "Bize Katılın", () => _navigateTo(context, const JoinUsPage())),
+                    context, Icons.person_add_alt, "Bize Katılın", () => _navigateTo(context, const JoinUsScreen())),
+                /*_buildDrawerItem(context, Icons.volunteer_activism, "Katkı Sunanlar",
+                    () => _navigateTo(context, OurSupportersScreen())),*/
                 const Divider(color: Colors.grey),
-                _buildSocialMediaTab(context),
                 const Spacer(),
+                _buildSocialMediaTab(context),
                 _buildAppVersion(),
                 const SizedBox(height: 20),
               ],
